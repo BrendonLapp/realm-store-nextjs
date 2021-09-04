@@ -1,0 +1,16 @@
+CREATE TABLE Card (
+  CardID INT NOT NULL auto_increment,
+  ApiID INT NOT NULL,
+  Quantity INT NOT NULL,
+  CardName VARCHAR(150) NOT NULL,
+  SetName VARCHAR(150) NOT NULL,
+  CardNumber VARCHAR(15) NOT NULL,
+  SetCode VARCHAR(15) NOT NULL,
+  Printing VARCHAR(20) NOT NULL,
+  QualityCondition VARCHAR(20) NOT NULL,
+  Rarity VARCHAR(20) NOT NULL,
+  Price DECIMAL(15,2) NOT NULL,
+  Image VARCHAR(250) NOT NULL,
+  
+  PRIMARY KEY (CardID)
+);
