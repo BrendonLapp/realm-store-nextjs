@@ -61,9 +61,15 @@ const addNewCards = async (csvData: string) => {
     throw new Error('There was an error when trying to add the cards.');
   }
 
-  for (const card of cardsData) {
-    console.log(card);
-  }
+  console.log('provider', cardsData);
+
+  axios.post('http://localhost:3001/cards', {
+    data: cardsData,
+  });
+
+  // for (const card of cardsData) {
+  //   console.log(card);
+  // }
 };
 
 export { convertFromStringToCsv, getCardDataFromApi, addNewCards };
