@@ -12,3 +12,8 @@ export interface Card {
   price?: number;
   image?: string;
 }
+
+export interface ApiResponse {
+  apiID: number;
+  price?: number;
+}
