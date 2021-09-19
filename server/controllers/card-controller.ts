@@ -22,7 +22,8 @@ class CardController {
       }
 
       try {
-        card.cardID = cardRepository.insertCard(card);
+        const cardID = await cardRepository.insertCard(card);
+        card.cardID = cardID;
         this.updateInventoryWithCard(card);
       } catch (error) {
         console.error(error);
@@ -30,6 +31,14 @@ class CardController {
     }
 
     res.sendStatus(200);
+  };
+
+  public getAllCards = async (req: any, res: any) => {
+    const cardRepository = new CardRepository();
+
+    const allCards = await cardRepository.getCards();
+
+    res.send(allCards);
   };
 
   private updateInventoryWithCard = (card: Card) => {

@@ -36,17 +36,15 @@ const convertFromStringToCsv = async (
 const addNewCards = async (csvData: string) => {
   const cardsData = await convertFromStringToCsv(csvData);
 
-  console.log(cardsData);
-
   if (!cardsData) {
     throw new Error('There was an error when trying to add the cards.');
   }
 
-  console.log('provider', cardsData);
-
-  axios.post('http://localhost:3001/cards', {
-    data: cardsData,
-  });
+  if (cardsData.length != 0) {
+    axios.post('http://localhost:3001/cards', {
+      data: cardsData,
+    });
+  }
 };
 
 export { addNewCards };
