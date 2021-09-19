@@ -14,6 +14,7 @@
 
 - TypeScript
 - React
+- Node JS
 - Express
 - MySql
 - [Yu-Gi-Oh DB API](https://db.ygoprodeck.com/api-guide/)

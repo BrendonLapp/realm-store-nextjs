@@ -1,11 +1,12 @@
 import axios from 'axios';
+import { Request, Response } from 'express';
 import CardRepository from '../repositories/card-repository';
 import { ApiResponse, Card } from '../types/card';
 import { Inventory } from '../types/inventory';
 import InventoryController from './inventory-controller';
 
 class CardController {
-  public addNewCards = async (req: any, res: any) => {
+  public addNewCards = async (req: Request, res: Response) => {
     const cardRepository = new CardRepository();
 
     for (const card of req.body.data) {
@@ -33,7 +34,7 @@ class CardController {
     res.sendStatus(200);
   };
 
-  public getAllCards = async (req: any, res: any) => {
+  public getAllCards = async (req: Request, res: Response) => {
     const cardRepository = new CardRepository();
 
     const allCards = await cardRepository.getCards();

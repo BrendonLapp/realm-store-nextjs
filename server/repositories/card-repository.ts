@@ -45,7 +45,7 @@ class CardRepository {
         if (error) {
           reject(error);
         }
-        const rows: any = JSON.parse(JSON.stringify(result));
+        const rows: Card[] = JSON.parse(JSON.stringify(result));
         connection.end();
         resolve(rows);
       });
