@@ -1,29 +1,60 @@
+import { useEffect, useState } from 'react';
+import { getAllCards } from '../../providers/card-provider';
+import { Card } from '../../types/card';
+import AddToCartButton from './add-to-cart-button';
+import PriceBox from './price-box';
+import ProductImage from './product-image';
+
 const ProductDisplay = () => {
+  const [cards, setCards] = useState<Card[]>();
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const retrieveAllCards = async () => {
+      const allCards = await getAllCards();
+
+      setCards(allCards);
+
+      setLoading(false);
+
+      console.log(cards);
+    };
+
+    if (loading) {
+      retrieveAllCards();
+    }
+  }, [cards, loading]);
+
+  if (loading) {
+    return <div>loading...</div>;
+  }
+
   return (
     <div className="container px-4 px-lg-5 mt-5">
       <div className="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-        <div className="col mb-5">
-          <div className="card h-100">
-            <img
-              className="card-img-top"
-              src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg"
-              alt="..."
-            />
-            <div className="card-body p-4">
-              <div className="text-center" style={{ color: 'black' }}>
-                <h5 className="fw-bolder">Sale Item</h5>
-                $25.00
+        {cards &&
+          cards?.map((card: Card) => (
+            <div key={card.cardID} className="col mb-5 productbox">
+              <div
+                className="card h-100"
+                style={{ backgroundColor: 'lightgray' }}
+              >
+                <ProductImage
+                  imageSource={card.image}
+                  imageAlt={card.cardName}
+                />
+                <PriceBox
+                  name={card.cardName}
+                  price={card.price}
+                  quantity={card.quantity}
+                  setName={card.setName}
+                  cardNumber={card.cardNumber}
+                />
+                <AddToCartButton />
               </div>
             </div>
-            <div className="card-footer p-4 pt-0 border-top-0 bg-transparent">
-              <div className="text-center">
-                <button className="btn btn-outline-dark mt-auto">
-                  Add to cart
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
+          ))}
+        ;
       </div>
     </div>
   );

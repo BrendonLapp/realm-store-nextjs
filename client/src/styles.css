@@ -1,0 +1,7 @@
+.productbox {
+  transition: 0.15s;
+}
+
+.productbox:hover {
+  transform: scale(1.02);
+}

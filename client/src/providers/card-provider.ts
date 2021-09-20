@@ -18,13 +18,15 @@ const convertFromStringToCsv = async (
   for (const value of jsonData.data) {
     const newCard: Card = {
       quantity: value.Quantity,
-      name: value.Name,
-      set: value.Set,
+      cardName: value.name,
+      setName: value.Set,
       cardNumber: value.CardNumber,
       setCode: value.SetCode,
       rarity: value.Rarity,
       printing: value.Printing,
       condition: value.Condition,
+      price: 0.0,
+      image: 'placeholder',
     };
 
     convertedData.push(newCard);
@@ -41,10 +43,18 @@ const addNewCards = async (csvData: string) => {
   }
 
   if (cardsData.length !== 0) {
-    axios.post('http://localhost:3001/cards', {
+    await axios.post('http://localhost:3001/cards', {
       data: cardsData,
     });
   }
 };
 
-export { addNewCards };
+const getAllCards = async (): Promise<Card[]> => {
+  const response = await axios.get('http://localhost:3001/cards', {});
+
+  const allCards = response.data;
+
+  return allCards;
+};
+
+export { addNewCards, getAllCards };
