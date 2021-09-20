@@ -40,7 +40,7 @@ const addNewCards = async (csvData: string) => {
     throw new Error('There was an error when trying to add the cards.');
   }
 
-  if (cardsData.length != 0) {
+  if (cardsData.length !== 0) {
     axios.post('http://localhost:3001/cards', {
       data: cardsData,
     });
