@@ -35,10 +35,7 @@ const ProductDisplay = () => {
         {cards &&
           cards?.map((card: Card) => (
             <div key={card.cardID} className="col mb-5 productbox">
-              <div
-                className="card h-100"
-                style={{ backgroundColor: 'lightgray' }}
-              >
+              <div className="card" style={{ backgroundColor: 'lightgray' }}>
                 <ProductImage
                   imageSource={card.image}
                   imageAlt={card.cardName}

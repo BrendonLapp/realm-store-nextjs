@@ -5,3 +5,19 @@
 .productbox:hover {
   transform: scale(1.02);
 }
+
+.margin-bottom-0 {
+  margin-bottom: 0rem;
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.red-text {
+  color: rgb(204, 38, 38);
+}
+
+.green-text {
+  color: rgb(31, 128, 23);
+}
