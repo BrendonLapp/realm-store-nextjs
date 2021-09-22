@@ -21,3 +21,16 @@
 .green-text {
   color: rgb(31, 128, 23);
 }
+
+.sidebar {
+  width: 10rem;
+  text-align: left;
+  background-color: black;
+  height: 94vh;
+}
+
+.sidebar-profile {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+}
