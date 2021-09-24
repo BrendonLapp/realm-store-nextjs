@@ -1,4 +1,9 @@
-const SideBar = () => {
+import { Route } from 'react-router';
+import NavItem from '../nav/nav-item';
+import AdminHome from './pages/admin-home';
+import AdminHome2 from './pages/admin-home2';
+
+const SideBar = ({ setPanel }: any) => {
   return (
     <div
       className="flex-shrink-0 p-3 bg-dark sidebar"
@@ -23,87 +28,20 @@ const SideBar = () => {
           <div className="collapse show" id="home-collapse">
             <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
               <li>
-                <a href="#" className="link-light rounded">
-                  Overview
-                </a>
+                <button
+                  className="link-light rounded"
+                  onClick={() => setPanel(<AdminHome />)}
+                >
+                  Admin Home
+                </button>
               </li>
               <li>
-                <a href="#" className="link-light rounded">
-                  Updates
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Reports
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="mb-1">
-          <button
-            className="btn btn-toggle align-items-center rounded collapsed link-light"
-            data-bs-toggle="collapse"
-            data-bs-target="#dashboard-collapse"
-            aria-expanded="false"
-          >
-            Dashboard
-          </button>
-          <div className="collapse" id="dashboard-collapse">
-            <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <li>
-                <a href="#" className="link-light rounded">
-                  Overview
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Weekly
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Monthly
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Annually
-                </a>
-              </li>
-            </ul>
-          </div>
-        </li>
-        <li className="mb-1">
-          <button
-            className="btn btn-toggle align-items-center rounded collapsed link-light"
-            data-bs-toggle="collapse"
-            data-bs-target="#orders-collapse"
-            aria-expanded="false"
-          >
-            Orders
-          </button>
-          <div className="collapse" id="orders-collapse">
-            <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-              <li>
-                <a href="#" className="link-light rounded">
-                  New
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Processed
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Shipped
-                </a>
-              </li>
-              <li>
-                <a href="#" className="link-light rounded">
-                  Returned
-                </a>
+                <button
+                  className="link-light rounded"
+                  onClick={() => setPanel(<AdminHome2 />)}
+                >
+                  Admin Home 2
+                </button>
               </li>
             </ul>
           </div>
@@ -129,24 +67,6 @@ const SideBar = () => {
             className="dropdown-menu dropdown-menu-dark text-small shadow"
             aria-labelledby="dropdownUser1"
           >
-            <li>
-              <a className="dropdown-item" href="#">
-                New project...
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                Settings
-              </a>
-            </li>
-            <li>
-              <a className="dropdown-item" href="#">
-                Profile
-              </a>
-            </li>
-            <li>
-              <hr className="dropdown-divider" />
-            </li>
             <li>
               <a className="dropdown-item" href="#">
                 Sign out

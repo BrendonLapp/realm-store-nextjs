@@ -1,9 +1,10 @@
+import CartBox from './cart-box';
 import NavItem from './nav-item';
 
 const NavBar = () => {
   return (
-    <nav className="navbar navbar-expand-lg navbar-light bg-dark">
-      <div className="container px-4 px-lg-5">
+    <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <div className="container px-4 px-lg-5 left">
         <a className="navbar-brand" href="/">
           Realm Games
         </a>
@@ -55,15 +56,7 @@ const NavBar = () => {
               </ul>
             </li>
           </ul>
-          <div className="d-flex">
-            <button className="btn btn-outline-light" type="submit">
-              <i className="bi-cart-fill me-1"></i>
-              Cart
-              <span className="badge bg-dark text-white ms-1 rounded-pill">
-                0
-              </span>
-            </button>
-          </div>
+          <CartBox numberInCart={0} />
         </div>
       </div>
     </nav>
