@@ -1,10 +1,10 @@
 import { Route } from 'react-router';
 import NavItem from '../../nav/nav-item';
 import AdminHome from '../panels/admin-home';
-import AddCards from '../panels/add-cards';
+import AddCards from '../panels/card-inventory';
 import Profile from './profile';
 import SideNavItem from './side-nav-item';
-import AddSealed from '../panels/add-sealed';
+import AddSealed from '../panels/sealed-inventory';
 
 const SideBar = ({ setPanel }: any) => {
   return (

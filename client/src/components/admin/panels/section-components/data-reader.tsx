@@ -1,5 +1,5 @@
 import { FormEvent } from 'react';
-import { addNewCards } from '../providers/card-provider';
+import { addNewCards } from '../../../../providers/card-provider';
 
 const DataReader = () => {
   const handleOnChange = (event: FormEvent<HTMLTextAreaElement>) => {
