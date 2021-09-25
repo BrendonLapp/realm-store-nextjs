@@ -23,7 +23,7 @@
 }
 
 .sidebar {
-  width: 10rem;
+  width: 15rem;
   text-align: left;
   background-color: black;
   height: 94vh;
@@ -44,4 +44,12 @@
   text-decoration: none;
   background: none;
   border: none;
+}
+
+.no-border {
+  border: none;
+}
+
+.no-background {
+  background: none;
 }

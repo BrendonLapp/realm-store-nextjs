@@ -1,6 +1,6 @@
 import { useState } from 'react';
-import AdminHome from '../components/admin/pages/admin-home';
-import SideBar from '../components/admin/side-bar';
+import AdminHome from '../components/admin/panels/admin-home';
+import SideBar from '../components/admin/side-bar/side-bar';
 
 const Admin = () => {
   const [panel, setPanel] = useState(<AdminHome />);
