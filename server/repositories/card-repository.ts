@@ -6,14 +6,16 @@ class CardRepository {
   public insertCard = async (card: Card): Promise<number> => {
     const connection = connectToDB();
 
-    if (!card.name) {
+    console.log(card);
+
+    if (!card.cardName) {
       return 0;
     }
 
     const payload = {
       apiId: card.apiID,
-      cardName: card.name,
-      setName: card.set,
+      cardName: card.cardName,
+      setName: card.setName,
       cardNumber: card.cardNumber,
       printing: card.printing,
       rarity: card.rarity,

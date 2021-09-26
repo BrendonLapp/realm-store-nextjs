@@ -18,7 +18,7 @@ const convertFromStringToCsv = async (
   for (const value of jsonData.data) {
     const newCard: Card = {
       quantity: value.Quantity,
-      cardName: value.name,
+      cardName: value.Name,
       setName: value.Set,
       cardNumber: value.CardNumber,
       setCode: value.SetCode,
@@ -49,12 +49,19 @@ const addNewCards = async (csvData: string) => {
   }
 };
 
-const getAllCards = async (): Promise<Card[]> => {
-  const response = await axios.get('http://localhost:3001/cards', {});
+const getAllCards = async (): Promise<Card[] | string> => {
+  try {
+    const response = await axios.get('http://localhost:3001/cards', {});
 
-  const allCards = response.data;
+    const allCards = response.data;
 
-  return allCards;
+    console.log(allCards);
+
+    return allCards;
+  } catch (error) {
+    console.error(error);
+    return 'Please Try Again';
+  }
 };
 
 export { addNewCards, getAllCards };

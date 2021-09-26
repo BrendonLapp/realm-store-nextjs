@@ -1,14 +1,45 @@
-import { FormEvent } from 'react';
+import { FormEvent, useState } from 'react';
 import { addNewCards } from '../../../../providers/card-provider';
 
 const DataReader = () => {
-  const handleOnChange = (event: FormEvent<HTMLTextAreaElement>) => {
-    const jsonData = event.currentTarget.value;
+  const [jsonData, setJsonData] = useState<string>('');
 
-    addNewCards(jsonData);
+  const handleOnChange = (event: FormEvent<HTMLTextAreaElement>) => {
+    const csvData = event.currentTarget.value;
+
+    setJsonData(csvData);
   };
 
-  return <textarea onChange={handleOnChange} />;
+  const onSubmit = () => {
+    if (jsonData !== '') {
+      addNewCards(jsonData);
+    }
+  };
+
+  const onClear = () => {
+    setJsonData('');
+  };
+
+  return (
+    <>
+      <div style={{ height: '65vh' }}>
+        <textarea className="csv-box" onChange={handleOnChange} />
+      </div>
+
+      <div className="csv-buttons">
+        <button
+          type="button"
+          className="btn btn-success mr2"
+          onClick={onSubmit}
+        >
+          Submit
+        </button>
+        <button type="button" className="btn btn-warning" onClick={onClear}>
+          Clear
+        </button>
+      </div>
+    </>
+  );
 };
 
 export default DataReader;

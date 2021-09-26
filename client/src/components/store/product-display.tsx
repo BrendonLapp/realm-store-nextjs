@@ -8,16 +8,19 @@ import ProductImage from './product-image';
 const ProductDisplay = () => {
   const [cards, setCards] = useState<Card[]>();
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const retrieveAllCards = async () => {
       const allCards = await getAllCards();
 
-      setCards(allCards);
+      if (typeof allCards !== 'string') {
+        setCards(allCards);
+      } else {
+        setErrorMessage(allCards);
+      }
 
       setLoading(false);
-
-      console.log(cards);
     };
 
     if (loading) {
@@ -27,6 +30,10 @@ const ProductDisplay = () => {
 
   if (loading) {
     return <div>loading...</div>;
+  }
+
+  if (errorMessage !== '') {
+    return <div>{errorMessage}</div>;
   }
 
   return (
@@ -51,7 +58,6 @@ const ProductDisplay = () => {
               </div>
             </div>
           ))}
-        ;
       </div>
     </div>
   );

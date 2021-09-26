@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
+import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import { ApiResponse, Card } from '../types/card';
 import { Inventory } from '../types/inventory';
@@ -24,6 +25,7 @@ class CardController {
 
       try {
         const cardID = await cardRepository.insertCard(card);
+        console.log('cardId', cardID);
         card.cardID = cardID;
         this.updateInventoryWithCard(card);
       } catch (error) {
@@ -45,7 +47,9 @@ class CardController {
   private updateInventoryWithCard = (card: Card) => {
     const inventoryController = new InventoryController();
 
-    const qualityID = this.pickQuality(card.condition);
+    const qualityID = pickQuality(card.condition);
+
+    console.log('quality', qualityID);
 
     const inventoryValues: Inventory = {
       cardID: card.cardID,
@@ -54,19 +58,6 @@ class CardController {
     };
 
     inventoryController.addToInventory(inventoryValues);
-  };
-
-  private pickQuality = (qualityName: string): number => {
-    switch (qualityName) {
-      case 'Near Mint':
-        return 1;
-      case 'Lightly Played':
-        return 2;
-      case 'Moderately Played':
-        return 3;
-      case 'Heavily Played':
-        return 4;
-    }
   };
 
   private getCardDataFromApi = async (

@@ -53,3 +53,20 @@
 .no-background {
   background: none;
 }
+
+.csv-box {
+  width: 40%;
+  height: 500px;
+  margin-left: 2%;
+  margin-top: 2%;
+  float: left;
+}
+
+.mr2 {
+  margin-right: 2rem;
+}
+
+.csv-buttons {
+  left: 48%;
+  position: absolute;
+}
