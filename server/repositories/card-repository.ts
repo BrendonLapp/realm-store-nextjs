@@ -6,8 +6,6 @@ class CardRepository {
   public insertCard = async (card: Card): Promise<number> => {
     const connection = connectToDB();
 
-    console.log(card);
-
     if (!card.cardName) {
       return 0;
     }

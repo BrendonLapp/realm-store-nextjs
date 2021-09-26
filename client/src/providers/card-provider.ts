@@ -43,7 +43,8 @@ const addNewCards = async (csvData: string) => {
   }
 
   if (cardsData.length !== 0) {
-    await axios.post('http://localhost:3001/cards', {
+    const apiURL = 'http://localhost:3001';
+    await axios.post(`${apiURL}/cards`, {
       data: cardsData,
     });
   }
@@ -51,11 +52,10 @@ const addNewCards = async (csvData: string) => {
 
 const getAllCards = async (): Promise<Card[] | string> => {
   try {
-    const response = await axios.get('http://localhost:3001/cards', {});
+    const apiURL = 'http://localhost:3001';
+    const response = await axios.get(`${apiURL}/cards`, {});
 
     const allCards = response.data;
-
-    console.log(allCards);
 
     return allCards;
   } catch (error) {

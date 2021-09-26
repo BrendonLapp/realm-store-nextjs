@@ -24,10 +24,11 @@ class CardController {
       }
 
       try {
-        const cardID = await cardRepository.insertCard(card);
-        console.log('cardId', cardID);
-        card.cardID = cardID;
-        this.updateInventoryWithCard(card);
+        if (card.apiID) {
+          const cardID = await cardRepository.insertCard(card);
+          card.cardID = cardID;
+          this.updateInventoryWithCard(card);
+        }
       } catch (error) {
         console.error(error);
       }
@@ -49,8 +50,6 @@ class CardController {
 
     const qualityID = pickQuality(card.condition);
 
-    console.log('quality', qualityID);
-
     const inventoryValues: Inventory = {
       cardID: card.cardID,
       qualityID: qualityID,
@@ -68,7 +67,8 @@ class CardController {
     }
 
     try {
-      const APIUrl = `https://db.ygoprodeck.com/api/v7/cardsetsinfo.php?setcode=${cardNumber}`;
+      const yugiohURL = process.env.YUGIOH_API;
+      const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
       const response = await axios.get(APIUrl);
 
       const returnData: ApiResponse = {

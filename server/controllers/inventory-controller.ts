@@ -18,7 +18,6 @@ class InventoryController {
         if (error) {
           console.error(error);
         }
-        console.log('Card Added' + cardInventory.cardID);
       });
     }
   };

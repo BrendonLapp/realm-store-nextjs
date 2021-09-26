@@ -1,5 +1,3 @@
-import { Route } from 'react-router';
-import NavItem from '../../nav/nav-item';
 import AdminHome from '../panels/admin-home';
 import AddCards from '../panels/card-inventory';
 import Profile from './profile';
