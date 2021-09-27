@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllCards } from '../../providers/card-provider';
+import CardProvider from '../../providers/card-provider';
 import { Card } from '../../types/card';
 import AddToCartButton from './add-to-cart-button';
 import PriceBox from './price-box';
@@ -12,7 +12,8 @@ const ProductDisplay = () => {
 
   useEffect(() => {
     const retrieveAllCards = async () => {
-      const allCards = await getAllCards();
+      const cardProvider = new CardProvider();
+      const allCards = await cardProvider.getAllCards();
 
       if (typeof allCards !== 'string') {
         setCards(allCards);

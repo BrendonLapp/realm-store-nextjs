@@ -1,5 +1,5 @@
 import { FormEvent, useState } from 'react';
-import { addNewCards } from '../../../../providers/card-provider';
+import CardProvider from '../../../../providers/card-provider';
 
 const DataReader = () => {
   const [jsonData, setJsonData] = useState<string>('');
@@ -12,7 +12,8 @@ const DataReader = () => {
 
   const onSubmit = () => {
     if (jsonData !== '') {
-      addNewCards(jsonData);
+      const cardProvider = new CardProvider();
+      cardProvider.addNewCards(jsonData);
     }
   };
 
