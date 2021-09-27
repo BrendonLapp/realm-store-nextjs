@@ -1,3 +1,11 @@
+html {
+  height: 100%;
+}
+
+.fakeheight {
+  min-height: 100% !important;
+}
+
 .productbox {
   transition: 0.15s;
 }
@@ -23,16 +31,15 @@
 }
 
 .sidebar {
-  width: 15rem;
   text-align: left;
-  background-color: black;
-  height: 94vh;
+  height: 100%;
   float: left;
+  position: fixed;
 }
 
 .sidebar-profile {
   position: absolute;
-  bottom: 1rem;
+  bottom: 5rem;
   left: 1rem;
 }
 
@@ -81,4 +88,14 @@
 .csv-buttons {
   left: 48%;
   position: absolute;
+}
+
+.left-panel-padding {
+  padding-left: 280px;
+}
+
+.panel-slider {
+  height: 100vh;
+  width: 280px;
+  float: left;
 }

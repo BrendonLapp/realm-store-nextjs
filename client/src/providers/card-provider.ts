@@ -68,7 +68,9 @@ class CardProvider {
     }
   };
 
-  public getCardsFromAPI = async (cardName: string) => {
+  public getCardsFromAPI = async (
+    cardName: string
+  ): Promise<APICard[] | string> => {
     try {
       const apiURL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
       const response = await axios.get(`${apiURL}?fname=${cardName}`);
@@ -78,31 +80,34 @@ class CardProvider {
       const allCards: APICard[] = [];
 
       for (const card of responseCards) {
-        const cardSet: Cardset[] = [];
+        if (card.card_sets) {
+          const cardSet: Cardset[] = [];
 
-        for (const set of card.card_sets) {
-          const setInfo: Cardset = {
-            setCode: set.set_code,
-            setName: set.setName,
-            setPrice: set.set_price,
-            setRarity: set.set_rarity,
+          for (const set of card.card_sets) {
+            const setInfo: Cardset = {
+              setCode: set.set_code,
+              setName: set.setName,
+              setPrice: set.set_price,
+              setRarity: set.set_rarity,
+            };
+
+            cardSet.push(setInfo);
+          }
+
+          const responseCard: APICard = {
+            name: card.name,
+            image: `https://storage.googleapis.com/ygoprodeck.com/pics/${card.id}.jpg`,
+            cardSets: cardSet,
           };
 
-          cardSet.push(setInfo);
+          allCards.push(responseCard);
         }
-
-        const responseCard: APICard = {
-          name: card.name,
-          image: `https://storage.googleapis.com/ygoprodeck.com/pics/${card.id}.jpg`,
-          cardSets: cardSet,
-        };
-
-        allCards.push(responseCard);
       }
 
-      console.log(allCards);
+      return allCards;
     } catch (error) {
       console.error(error);
+      return 'Something has gone wrong retrieving the card data. Please try again.';
     }
   };
 }
