@@ -38,7 +38,7 @@ class CardRepository {
     const connection = connectToDB();
 
     const sqlQuery =
-      'SELECT cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image FROM Card';
+      'SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID';
 
     return new Promise((resolve, reject) => {
       connection.query(sqlQuery, function (error, result) {

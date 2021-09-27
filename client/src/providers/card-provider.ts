@@ -57,6 +57,8 @@ const getAllCards = async (): Promise<Card[] | string> => {
 
     const allCards = response.data;
 
+    console.log(allCards);
+
     return allCards;
   } catch (error) {
     console.error(error);

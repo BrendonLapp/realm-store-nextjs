@@ -1,25 +1,12 @@
 import { connectToDB } from '../lib/mysql-connection';
+import InventoryRepository from '../repositories/inventory-repository';
 import { Inventory } from '../types/inventory';
 
 class InventoryController {
   public addToInventory = (cardInventory: Inventory) => {
-    const connection = connectToDB();
+    const inventoryRepository = new InventoryRepository();
 
-    if (cardInventory) {
-      const payload = {
-        cardId: cardInventory.cardID,
-        qualityId: cardInventory.qualityID,
-        quantity: cardInventory.quantity,
-      };
-
-      const sqlQuery = 'INSERT INTO CardInventory SET ?';
-
-      connection.query(sqlQuery, payload, function (error, result) {
-        if (error) {
-          console.error(error);
-        }
-      });
-    }
+    inventoryRepository.insertInventory(cardInventory);
   };
 }
 
