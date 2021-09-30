@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Papa from 'papaparse';
 import { APICard, Cardset } from '../types/api-card';
+import { APIDetails, CardImage, CardSet } from '../types/api-details';
 import { Card } from '../types/card';
 
 class CardProvider {
@@ -59,8 +60,6 @@ class CardProvider {
 
       const allCards = response.data;
 
-      console.log(allCards);
-
       return allCards;
     } catch (error) {
       console.error(error);
@@ -109,6 +108,43 @@ class CardProvider {
       console.error(error);
       return 'Something has gone wrong retrieving the card data. Please try again.';
     }
+  };
+
+  public getCardFromAPI = async (cardName: string): Promise<APIDetails> => {
+    const apiURL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+    const response = await axios.get(`${apiURL}?name=${cardName}`);
+
+    const cardData = response.data.data;
+    const cardImages: CardImage[] = [];
+    const cardSets: CardSet[] = [];
+
+    for (const image of cardData[0].card_images) {
+      const newImage: CardImage = {
+        id: image.id,
+        imageUrl: image.image_url,
+      };
+
+      cardImages.push(newImage);
+    }
+
+    for (const set of cardData[0].card_sets) {
+      const newSet: CardSet = {
+        setName: set.set_name,
+        setCode: set.set_code,
+        setRarity: set.set_rarity,
+        setPrice: set.set_price,
+      };
+
+      cardSets.push(newSet);
+    }
+
+    const cardDetails: APIDetails = {
+      name: cardData[0].name,
+      cardImages: cardImages,
+      cardSets: cardSets,
+    };
+
+    return cardDetails;
   };
 }
 export default CardProvider;
