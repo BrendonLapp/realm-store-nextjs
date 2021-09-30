@@ -41,7 +41,10 @@ const AddCardInventoryPanel = ({ cardName }: AddCardInventoryPanelProps) => {
             />
           </div>
           <div style={{ width: '80%' }}>
-            <AddCardsInventoryDetails cardDetails={cardData.cardSets} />
+            <AddCardsInventoryDetails
+              cardDetails={cardData.cardSets}
+              name={cardData.name}
+            />
           </div>
         </div>
       </div>

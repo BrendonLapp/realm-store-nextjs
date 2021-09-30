@@ -2,10 +2,6 @@ html {
   height: 100%;
 }
 
-.fakeheight {
-  min-height: 100% !important;
-}
-
 .productbox {
   transition: 0.15s;
 }
@@ -86,7 +82,7 @@ html {
 }
 
 .csv-buttons {
-  left: 48%;
+  left: 40%;
   position: absolute;
 }
 

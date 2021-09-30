@@ -53,6 +53,16 @@ class CardProvider {
     }
   };
 
+  public addNewCard = async (newCard: Card) => {
+    const cardData: Card[] = [];
+    cardData.push(newCard);
+
+    const apiURL = 'http://localhost:3001';
+    await axios.post(`${apiURL}/cards`, {
+      data: cardData,
+    });
+  };
+
   public getAllCards = async (): Promise<Card[] | string> => {
     try {
       const apiURL = 'http://localhost:3001';
@@ -145,6 +155,29 @@ class CardProvider {
     };
 
     return cardDetails;
+  };
+
+  public getAPIID = async (
+    setName: string,
+    cardName: string
+  ): Promise<number> => {
+    const response = await axios.get(
+      `https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=${setName}`
+    );
+
+    const responseData = response.data.data;
+
+    let apiID = 0;
+
+    for (const data of responseData) {
+      console.log(data);
+      if (data.name === cardName) {
+        apiID = data.id;
+        break;
+      }
+    }
+
+    return apiID;
   };
 }
 export default CardProvider;
