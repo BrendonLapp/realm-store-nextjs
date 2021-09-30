@@ -21,6 +21,7 @@ const AddCardsByName = () => {
       if (typeof responseCards !== 'string') {
         setCards(responseCards);
         setErrorMessage('');
+        setCardName('');
       } else {
         setErrorMessage(responseCards);
         setCards(undefined);
