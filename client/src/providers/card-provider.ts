@@ -120,41 +120,47 @@ class CardProvider {
     }
   };
 
-  public getCardFromAPI = async (cardName: string): Promise<APIDetails> => {
-    const apiURL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
-    const response = await axios.get(`${apiURL}?name=${cardName}`);
+  public getCardFromAPI = async (
+    cardName: string
+  ): Promise<APIDetails | undefined> => {
+    try {
+      const apiURL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+      const response = await axios.get(`${apiURL}?name=${cardName}`);
 
-    const cardData = response.data.data;
-    const cardImages: CardImage[] = [];
-    const cardSets: CardSet[] = [];
+      const cardData = response.data.data;
+      const cardImages: CardImage[] = [];
+      const cardSets: CardSet[] = [];
 
-    for (const image of cardData[0].card_images) {
-      const newImage: CardImage = {
-        id: image.id,
-        imageUrl: image.image_url,
+      for (const image of cardData[0].card_images) {
+        const newImage: CardImage = {
+          id: image.id,
+          imageUrl: image.image_url,
+        };
+
+        cardImages.push(newImage);
+      }
+
+      for (const set of cardData[0].card_sets) {
+        const newSet: CardSet = {
+          setName: set.set_name,
+          setCode: set.set_code,
+          setRarity: set.set_rarity,
+          setPrice: set.set_price,
+        };
+
+        cardSets.push(newSet);
+      }
+
+      const cardDetails: APIDetails = {
+        name: cardData[0].name,
+        cardImages: cardImages,
+        cardSets: cardSets,
       };
 
-      cardImages.push(newImage);
+      return cardDetails;
+    } catch (error) {
+      console.error(error);
     }
-
-    for (const set of cardData[0].card_sets) {
-      const newSet: CardSet = {
-        setName: set.set_name,
-        setCode: set.set_code,
-        setRarity: set.set_rarity,
-        setPrice: set.set_price,
-      };
-
-      cardSets.push(newSet);
-    }
-
-    const cardDetails: APIDetails = {
-      name: cardData[0].name,
-      cardImages: cardImages,
-      cardSets: cardSets,
-    };
-
-    return cardDetails;
   };
 
   public getAPIID = async (
@@ -170,7 +176,6 @@ class CardProvider {
     let apiID = 0;
 
     for (const data of responseData) {
-      console.log(data);
       if (data.name === cardName) {
         apiID = data.id;
         break;

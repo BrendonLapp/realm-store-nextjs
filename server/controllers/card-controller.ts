@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
+import { checkIfCardExists } from '../lib/check-if-card-exists';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import { ApiResponse, Card } from '../types/card';
@@ -11,30 +12,36 @@ class CardController {
     const cardRepository = new CardRepository();
 
     for (const card of req.body.data) {
-      const apiResponse: ApiResponse = await this.getCardDataFromApi(
-        card.cardNumber
-      );
+      console.log(card);
 
-      card.apiID = apiResponse.apiID;
-      card.price = apiResponse.price;
-      card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
+      const isExisting = checkIfCardExists(card.cardNumber);
 
-      if (!card.price) {
-        card.price = 0;
-      }
+      if (!isExisting) {
+        const apiResponse: ApiResponse = await this.getCardDataFromApi(
+          card.cardNumber
+        );
 
-      try {
-        if (card.apiID) {
-          const cardID = await cardRepository.insertCard(card);
-          card.cardID = cardID;
-          this.updateInventoryWithCard(card);
+        card.apiID = apiResponse.apiID;
+        card.price = apiResponse.price;
+        card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
+
+        if (!card.price) {
+          card.price = 0;
         }
-      } catch (error) {
-        console.error(error);
-      }
-    }
 
-    res.sendStatus(200);
+        try {
+          if (card.apiID) {
+            const cardID = await cardRepository.insertCard(card);
+            card.cardID = cardID;
+            this.updateInventoryWithCard(card);
+          }
+        } catch (error) {
+          console.error(error);
+        }
+      }
+
+      res.sendStatus(200);
+    }
   };
 
   public getAllCards = async (req: Request, res: Response) => {

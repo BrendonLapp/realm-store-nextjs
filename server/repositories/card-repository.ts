@@ -51,6 +51,24 @@ class CardRepository {
       });
     });
   };
+
+  public getCard = async (cardNumber: string): Promise<Card[]> => {
+    const connection = connectToDB();
+
+    const sqlQuery =
+      'SELECT Card.cardID, cardNumber FROM Card WHERE cardNumber=?';
+
+    return new Promise((resolve, reject) => {
+      connection.query(sqlQuery, [cardNumber], function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        const rows: Card[] = JSON.parse(JSON.stringify(result));
+        connection.end();
+        resolve(rows);
+      });
+    });
+  };
 }
 
 export default CardRepository;
