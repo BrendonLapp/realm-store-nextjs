@@ -9,38 +9,48 @@ import InventoryController from './inventory-controller';
 
 class CardController {
   public addNewCards = async (req: Request, res: Response) => {
-    const cardRepository = new CardRepository();
-
+    const inventoryController = new InventoryController();
     for (const card of req.body.data) {
-      console.log(card);
+      const existingCard = await checkIfCardExists(card.cardNumber);
 
-      const isExisting = checkIfCardExists(card.cardNumber);
+      const qualityID = pickQuality(card.condition);
 
-      if (!isExisting) {
-        const apiResponse: ApiResponse = await this.getCardDataFromApi(
-          card.cardNumber
+      if (!existingCard) {
+        this.addCard(card);
+      } else {
+        await inventoryController.updateInventory(
+          existingCard[0].cardID,
+          qualityID,
+          card.quantity
         );
-
-        card.apiID = apiResponse.apiID;
-        card.price = apiResponse.price;
-        card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
-
-        if (!card.price) {
-          card.price = 0;
-        }
-
-        try {
-          if (card.apiID) {
-            const cardID = await cardRepository.insertCard(card);
-            card.cardID = cardID;
-            this.updateInventoryWithCard(card);
-          }
-        } catch (error) {
-          console.error(error);
-        }
       }
 
       res.sendStatus(200);
+    }
+  };
+
+  public addCard = async (card: Card) => {
+    const cardRepository = new CardRepository();
+    const apiResponse: ApiResponse = await this.getCardDataFromApi(
+      card.cardNumber
+    );
+
+    card.apiID = apiResponse.apiID;
+    card.price = apiResponse.price;
+    card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
+
+    if (!card.price) {
+      card.price = 0;
+    }
+
+    try {
+      if (card.apiID) {
+        const cardID = await cardRepository.insertCard(card);
+        card.cardID = cardID;
+        this.addCardToInventory(card);
+      }
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -52,7 +62,7 @@ class CardController {
     res.send(allCards);
   };
 
-  private updateInventoryWithCard = (card: Card) => {
+  private addCardToInventory = (card: Card) => {
     const inventoryController = new InventoryController();
 
     const qualityID = pickQuality(card.condition);

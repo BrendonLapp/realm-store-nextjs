@@ -1,13 +1,17 @@
 import CardRepository from '../repositories/card-repository';
+import { Card } from '../types/card';
 
-const checkIfCardExists = async (cardNumber: string): Promise<boolean> => {
+const checkIfCardExists = async (
+  cardNumber: string
+): Promise<Card[] | undefined> => {
   const cardRepository = new CardRepository();
-
   const card = await cardRepository.getCard(cardNumber);
 
-  console.log(card);
+  if (card.length !== 0) {
+    return card;
+  }
 
-  return false;
+  return undefined;
 };
 
 export { checkIfCardExists };
