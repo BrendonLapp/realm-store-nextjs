@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { getAllCards } from '../../providers/card-provider';
+import CardProvider from '../../providers/card-provider';
 import { Card } from '../../types/card';
 import AddToCartButton from './add-to-cart-button';
 import PriceBox from './price-box';
@@ -8,16 +8,20 @@ import ProductImage from './product-image';
 const ProductDisplay = () => {
   const [cards, setCards] = useState<Card[]>();
   const [loading, setLoading] = useState(true);
+  const [errorMessage, setErrorMessage] = useState('');
 
   useEffect(() => {
     const retrieveAllCards = async () => {
-      const allCards = await getAllCards();
+      const cardProvider = new CardProvider();
+      const allCards = await cardProvider.getAllCards();
 
-      setCards(allCards);
+      if (typeof allCards !== 'string') {
+        setCards(allCards);
+      } else {
+        setErrorMessage(allCards);
+      }
 
       setLoading(false);
-
-      console.log(cards);
     };
 
     if (loading) {
@@ -27,6 +31,10 @@ const ProductDisplay = () => {
 
   if (loading) {
     return <div>loading...</div>;
+  }
+
+  if (errorMessage !== '') {
+    return <div>{errorMessage}</div>;
   }
 
   return (
@@ -51,7 +59,6 @@ const ProductDisplay = () => {
               </div>
             </div>
           ))}
-        ;
       </div>
     </div>
   );

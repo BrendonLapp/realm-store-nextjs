@@ -2,15 +2,28 @@ interface TabsNavProps {
   name: string;
   setActive: any;
   activeTab: string;
+  setSection: any;
+  sectionComponent: any;
 }
 
-const TabsNav = ({ name, activeTab, setActive }: TabsNavProps) => {
+const TabsNav = ({
+  name,
+  activeTab,
+  setActive,
+  sectionComponent,
+  setSection,
+}: TabsNavProps) => {
+  const setActivePanel = () => {
+    setActive(name);
+    setSection(sectionComponent);
+  };
+
   return (
     <li className="nav-item">
       <button
         className={`${activeTab === name ? `nav-link active` : `nav-link `}`}
         aria-current="page"
-        onClick={() => setActive(name)}
+        onClick={setActivePanel}
       >
         {name}
       </button>

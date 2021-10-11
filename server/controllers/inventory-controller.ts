@@ -1,25 +1,29 @@
-import { connectToDB } from '../lib/mysql-connection';
+import InventoryRepository from '../repositories/inventory-repository';
 import { Inventory } from '../types/inventory';
 
 class InventoryController {
-  public addToInventory = (cardInventory: Inventory) => {
-    const connection = connectToDB();
+  public addToInventory = async (cardInventory: Inventory) => {
+    const inventoryRepository = new InventoryRepository();
 
-    if (cardInventory) {
-      const payload = {
-        cardId: cardInventory.cardID,
-        qualityId: cardInventory.qualityID,
-        quantity: cardInventory.quantity,
-      };
+    inventoryRepository.insertInventory(cardInventory);
+  };
 
-      const sqlQuery = 'INSERT INTO CardInventory SET ?';
+  public updateInventory = async (
+    cardID: number,
+    qualityID: number,
+    quantity: number
+  ) => {
+    const inventoryRepository = new InventoryRepository();
 
-      connection.query(sqlQuery, payload, function (error, result) {
-        if (error) {
-          console.error(error);
-        }
-        console.log('Card Added' + cardInventory.cardID);
-      });
+    const inventoryLevels = await inventoryRepository.getCardInventoryByQuality(
+      cardID,
+      qualityID
+    );
+
+    if (inventoryLevels) {
+      const newQuantity = inventoryLevels[0].quantity + quantity;
+
+      inventoryRepository.updateCardInventory(cardID, qualityID, newQuantity);
     }
   };
 }

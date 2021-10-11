@@ -2,8 +2,8 @@ export interface Card {
   cardID?: number;
   apiID?: number;
   quantity: number;
-  name: string;
-  set: string;
+  cardName: string;
+  setName: string;
   cardNumber: string;
   setCode: string;
   printing: string;

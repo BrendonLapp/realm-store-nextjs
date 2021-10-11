@@ -12,7 +12,7 @@ const Admin = () => {
   return (
     <>
       <SideBar setPanel={DisplayPanel} />
-      {panel}
+      <div className="left-panel-padding">{panel}</div>
     </>
   );
 };

@@ -1,3 +1,7 @@
+html {
+  height: 100%;
+}
+
 .productbox {
   transition: 0.15s;
 }
@@ -23,16 +27,15 @@
 }
 
 .sidebar {
-  width: 15rem;
   text-align: left;
-  background-color: black;
-  height: 94vh;
+  height: 100%;
   float: left;
+  position: fixed;
 }
 
 .sidebar-profile {
   position: absolute;
-  bottom: 1rem;
+  bottom: 5rem;
   left: 1rem;
 }
 
@@ -52,4 +55,48 @@
 
 .no-background {
   background: none;
+}
+
+.panel-wrapper {
+  margin-left: 2%;
+  margin-top: 2% !important;
+  float: left;
+  width: 70%;
+}
+
+.admin-search-width {
+  width: 90% !important;
+  float: left;
+}
+
+.csv-box {
+  width: 40%;
+  height: 500px;
+  margin-left: 2%;
+  margin-top: 2%;
+  float: left;
+}
+
+.mr2 {
+  margin-right: 2rem;
+}
+
+.csv-buttons {
+  left: 40%;
+  position: absolute;
+}
+
+.left-panel-padding {
+  padding-left: 280px;
+}
+
+.panel-slider {
+  width: 280px;
+  float: left;
+  position: fixed;
+  top: 0%;
+}
+
+.navbar {
+  z-index: 10;
 }
