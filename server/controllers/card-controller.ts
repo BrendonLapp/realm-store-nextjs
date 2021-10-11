@@ -91,7 +91,7 @@ class CardController {
 
       const returnData: ApiResponse = {
         apiID: response.data.id,
-        price: await ConvertPriceToCanadian(response.data.set_price),
+        price: response.data.set_price,
       };
 
       return returnData;
