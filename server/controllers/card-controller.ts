@@ -1,6 +1,7 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
 import { checkIfCardExists } from '../lib/check-if-card-exists';
+import ConvertPriceToCanadian from '../lib/convert-price-to-canadian';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import { ApiResponse, Card } from '../types/card';
@@ -90,7 +91,7 @@ class CardController {
 
       const returnData: ApiResponse = {
         apiID: response.data.id,
-        price: response.data.set_price,
+        price: await ConvertPriceToCanadian(response.data.set_price),
       };
 
       return returnData;
