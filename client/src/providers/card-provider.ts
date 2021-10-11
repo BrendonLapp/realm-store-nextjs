@@ -163,8 +163,6 @@ class CardProvider {
     }
   };
 
-  public getCardsFromSetFromAPI = async (setName: string) => {};
-
   public getAPIID = async (
     setName: string,
     cardName: string
