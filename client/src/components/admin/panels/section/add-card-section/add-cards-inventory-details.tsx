@@ -1,8 +1,4 @@
-import { useState } from 'react';
-import CardProvider from '../../../../providers/card-provider';
-import { CardSet } from '../../../../types/api-details';
-import { Card } from '../../../../types/card';
-import SubmitButton from '../../../shared/submit-button';
+import { CardSet } from '../../../../../types/api-details';
 import AddCardsInventoryRow from './add-cards-inventory-row';
 
 interface AddCardsInventoryDetailsProps {

@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import CardProvider from '../../../../providers/card-provider';
-import { CardSet } from '../../../../types/api-details';
-import { Card } from '../../../../types/card';
-import SubmitButton from '../../../shared/submit-button';
+import CardProvider from '../../../../../providers/card-provider';
+import { CardSet } from '../../../../../types/api-details';
+import { Card } from '../../../../../types/card';
+import SubmitButton from '../../../../shared/submit-button';
 
 interface AddCardsInventoryRowProps {
   card: CardSet;

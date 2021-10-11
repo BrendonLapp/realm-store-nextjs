@@ -1,9 +1,9 @@
 import { useState } from 'react';
 import { TabDisplay } from '../../../types/tab-display';
 import Tabs from '../tab-nav/tabs';
-import AddCardsByCSV from './section/add-cards-by-csv';
-import AddCardsByName from './section/add-cards-by-name';
-import UpdateCardInventory from './section/update-card-inventory';
+import AddCardsByCSV from './section/add-card-section/add-cards-by-csv';
+import AddCardsByName from './section/add-card-section/add-cards-by-name';
+import UpdateCardInventory from './section/update-card-section/update-card-inventory';
 
 const TabValues: TabDisplay[] = [
   {

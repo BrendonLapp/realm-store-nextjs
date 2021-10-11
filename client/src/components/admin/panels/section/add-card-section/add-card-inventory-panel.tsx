@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
-import CardProvider from '../../../../providers/card-provider';
-import { APIDetails } from '../../../../types/api-details';
-import ProductImage from '../../../store/product-image';
+import CardProvider from '../../../../../providers/card-provider';
+import { APIDetails } from '../../../../../types/api-details';
+import ProductImage from '../../../../store/product-image';
 import AddCardsInventoryDetails from './add-cards-inventory-details';
 
 interface AddCardInventoryPanelProps {

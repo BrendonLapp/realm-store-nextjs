@@ -1,4 +1,4 @@
-import DataReader from '../section-components/data-reader';
+import DataReader from '../../section-components/data-reader';
 
 const AddCardsByCSV = () => {
   return (

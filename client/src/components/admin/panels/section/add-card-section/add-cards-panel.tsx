@@ -1,6 +1,6 @@
-import { APICard } from '../../../../types/api-card';
-import ProductImage from '../../../store/product-image';
-import InventoryInfo from '../section-components/inventory-info';
+import { APICard } from '../../../../../types/api-card';
+import ProductImage from '../../../../store/product-image';
+import InventoryInfo from '../../section-components/inventory-info';
 
 interface AddCardsPanelProps {
   cards: APICard[];

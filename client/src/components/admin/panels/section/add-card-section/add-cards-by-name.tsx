@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import CardProvider from '../../../../providers/card-provider';
-import { APICard } from '../../../../types/api-card';
-import SearchBar from '../../../shared/search-bar';
-import SubmitButton from '../../../shared/submit-button';
+import CardProvider from '../../../../../providers/card-provider';
+import { APICard } from '../../../../../types/api-card';
+import SearchBar from '../../../../shared/search-bar';
+import SubmitButton from '../../../../shared/submit-button';
 import AddCardInventoryPanel from './add-card-inventory-panel';
 import AddCardsPanel from './add-cards-panel';
 
