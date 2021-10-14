@@ -77,6 +77,20 @@ class CardProvider {
     }
   };
 
+  public getAllCardsByPartialName = async (partialName: string) => {
+    try {
+      const apiURL = 'http://localhost:3001';
+      const response = await axios.get(`${apiURL}/cards/${partialName}`);
+
+      const allCards = response.data;
+
+      return allCards;
+    } catch (error) {
+      console.error(error);
+      return 'Please try again';
+    }
+  };
+
   public getCardsFromAPI = async (
     cardName: string
   ): Promise<APICard[] | string> => {
