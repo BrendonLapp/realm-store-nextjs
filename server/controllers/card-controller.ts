@@ -63,6 +63,16 @@ class CardController {
     res.send(allCards);
   };
 
+  public getAllCardsByPartialName = async (req: Request, res: Response) => {
+    const cardRepository = new CardRepository();
+
+    const allCards = await cardRepository.getCardsByPartialName(
+      req.params.partialName
+    );
+
+    res.send(allCards);
+  };
+
   private addCardToInventory = (card: Card) => {
     const inventoryController = new InventoryController();
 

@@ -52,6 +52,25 @@ class CardRepository {
     });
   };
 
+  public getCardsByPartialName = async (
+    partialName: string
+  ): Promise<Card[]> => {
+    const connection = connectToDB();
+
+    const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardName LIKE '%${partialName}%'`;
+
+    return new Promise((resolve, reject) => {
+      connection.query(sqlQuery, function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        const rows: Card[] = JSON.parse(JSON.stringify(result));
+        connection.end();
+        resolve(rows);
+      });
+    });
+  };
+
   public getCard = async (cardNumber: string): Promise<Card[]> => {
     const connection = connectToDB();
 
