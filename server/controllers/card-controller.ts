@@ -4,6 +4,7 @@ import { checkIfCardExists } from '../lib/check-if-card-exists';
 import ConvertPriceToCanadian from '../lib/convert-price-to-canadian';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
+import InventoryRepository from '../repositories/inventory-repository';
 import { ApiResponse, Card } from '../types/card';
 import { Inventory } from '../types/inventory';
 import InventoryController from './inventory-controller';
@@ -75,10 +76,17 @@ class CardController {
 
   public getCardByCardID = async (req: Request, res: Response) => {
     const cardRepository = new CardRepository();
+    const inventoryRepository = new InventoryRepository();
 
     const allCards = await cardRepository.getCardsByCardID(
       Number.parseInt(req.params.cardID)
     );
+
+    const inventoryLevels = await inventoryRepository.getCardInventoryByCardID(
+      Number.parseInt(req.params.cardID)
+    );
+
+    console.log(inventoryLevels);
 
     res.send(allCards);
   };

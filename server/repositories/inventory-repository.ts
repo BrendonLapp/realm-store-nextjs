@@ -44,12 +44,32 @@ class InventoryRepository {
     });
   };
 
+  public getCardInventoryByCardID = (cardID: number): Promise<Inventory[]> => {
+    const connection = connectToDB();
+
+    const sqlQuery =
+      'SELECT cardInventoryID, cardID, qualityID, quantity FROM CardInventory WHERE cardID = ?';
+
+    return new Promise((resolve, reject) => {
+      connection.query(sqlQuery, [cardID], function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        const rows: Inventory[] = JSON.parse(JSON.stringify(result));
+        connection.end();
+        resolve(rows);
+      });
+    });
+  };
+
   public updateCardInventory = (
     cardID: number,
     quality: number,
     quantity: number
   ) => {
     const connection = connectToDB();
+
+    console.log(quantity, quality, cardID);
 
     const sqlQuery =
       'UPDATE cardInventory SET quantity = ? WHERE cardID = ? AND qualityID = ?';
