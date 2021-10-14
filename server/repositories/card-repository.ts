@@ -88,6 +88,24 @@ class CardRepository {
       });
     });
   };
+
+  public getCardsByCardID = async (cardID: number): Promise<Card> => {
+    const connection = connectToDB();
+
+    const sqlQuery =
+      'SELECT Card.cardID, apiID, cardNumber, printing, rarity, price, image FROM Card WHERE CardID=?';
+
+    return new Promise((resolve, reject) => {
+      connection.query(sqlQuery, [cardID], function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        const rows: Card = JSON.parse(JSON.stringify(result));
+        connection.end();
+        resolve(rows);
+      });
+    });
+  };
 }
 
 export default CardRepository;

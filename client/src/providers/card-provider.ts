@@ -80,11 +80,29 @@ class CardProvider {
   public getAllCardsByPartialName = async (partialName: string) => {
     try {
       const apiURL = 'http://localhost:3001';
-      const response = await axios.get(`${apiURL}/cards/${partialName}`);
+      const response = await axios.get(
+        `${apiURL}/cards/byPartialName/${partialName}`
+      );
 
       const allCards = response.data;
 
       return allCards;
+    } catch (error) {
+      console.error(error);
+      return 'Please try again';
+    }
+  };
+
+  public getCardByID = async (cardID: number): Promise<Card | string> => {
+    try {
+      const apiURL = 'http://localhost:3001';
+      const response = await axios.get(`${apiURL}/cards/byID/${cardID}`);
+
+      const allCards = response.data;
+
+      console.log('provider', allCards);
+
+      return allCards[0];
     } catch (error) {
       console.error(error);
       return 'Please try again';

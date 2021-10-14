@@ -19,9 +19,14 @@ app.get('/cards', (req: Request, res: Response) => {
   controller.getAllCards(req, res);
 });
 
-app.get('/cards/:partialName', (req: Request, res: Response) => {
+app.get('/cards/byPartialName/:partialName', (req: Request, res: Response) => {
   const controller = new CardController();
   controller.getAllCardsByPartialName(req, res);
+});
+
+app.get('/cards/byID/:cardID', (req: Request, res: Response) => {
+  const controller = new CardController();
+  controller.getCardByCardID(req, res);
 });
 
 app.post('/cards', (req: Request, res: Response) => {

@@ -73,6 +73,16 @@ class CardController {
     res.send(allCards);
   };
 
+  public getCardByCardID = async (req: Request, res: Response) => {
+    const cardRepository = new CardRepository();
+
+    const allCards = await cardRepository.getCardsByCardID(
+      Number.parseInt(req.params.cardID)
+    );
+
+    res.send(allCards);
+  };
+
   private addCardToInventory = (card: Card) => {
     const inventoryController = new InventoryController();
 
