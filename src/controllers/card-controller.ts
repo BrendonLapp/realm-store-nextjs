@@ -4,7 +4,15 @@ import { checkIfCardExists } from '../lib/check-if-card-exists';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import InventoryRepository from '../repositories/inventory-repository';
-import { ApiResponse, Card } from '../types/card';
+import {
+  APICard,
+  APIDetails,
+  ApiResponse,
+  Card,
+  CardImage,
+  Cardset,
+  CardSet,
+} from '../types/card';
 import { Inventory } from '../types/inventory';
 import InventoryController from './inventory-controller';
 
@@ -184,6 +192,114 @@ class CardController {
     };
 
     return returnData;
+  };
+
+  public getCardsFromAPI = async (
+    cardName: string
+  ): Promise<APICard[] | string> => {
+    try {
+      const apiURL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+      const response: any = await axios.get(`${apiURL}?fname=${cardName}`);
+
+      const responseCards = response.data.data;
+
+      const allCards: APICard[] = [];
+
+      for (const card of responseCards) {
+        if (card.card_sets) {
+          const cardSet: Cardset[] = [];
+
+          for (const set of card.card_sets) {
+            const setInfo: Cardset = {
+              setCode: set.set_code,
+              setName: set.setName,
+              setPrice: set.set_price,
+              setRarity: set.set_rarity,
+            };
+
+            cardSet.push(setInfo);
+          }
+
+          const responseCard: APICard = {
+            name: card.name,
+            image: `https://storage.googleapis.com/ygoprodeck.com/pics/${card.id}.jpg`,
+            cardSets: cardSet,
+          };
+
+          allCards.push(responseCard);
+        }
+      }
+
+      return allCards;
+    } catch (error) {
+      console.error(error);
+      return 'Something has gone wrong retrieving the card data. Please try again.';
+    }
+  };
+
+  public getCardFromAPI = async (
+    cardName: string
+  ): Promise<APIDetails | undefined> => {
+    try {
+      const apiURL = 'https://db.ygoprodeck.com/api/v7/cardinfo.php';
+      const response: any = await axios.get(`${apiURL}?name=${cardName}`);
+
+      const cardData = response.data.data;
+      const cardImages: CardImage[] = [];
+      const cardSets: CardSet[] = [];
+
+      for (const image of cardData[0].card_images) {
+        const newImage: CardImage = {
+          id: image.id,
+          imageUrl: image.image_url,
+        };
+
+        cardImages.push(newImage);
+      }
+
+      for (const set of cardData[0].card_sets) {
+        const newSet: CardSet = {
+          setName: set.set_name,
+          setCode: set.set_code,
+          setRarity: set.set_rarity,
+          setPrice: set.set_price,
+        };
+
+        cardSets.push(newSet);
+      }
+
+      const cardDetails: APIDetails = {
+        name: cardData[0].name,
+        cardImages: cardImages,
+        cardSets: cardSets,
+      };
+
+      return cardDetails;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  public getAPIID = async (
+    setName: string,
+    cardName: string
+  ): Promise<number> => {
+    const response: any = await axios.get(
+      `https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=${setName}`
+    );
+
+    const responseData = response.data.data;
+
+    let apiID = 0;
+
+    for (const data of responseData) {
+      if (data.name === cardName) {
+        apiID = data.id;
+        break;
+      }
+    }
+
+    return apiID;
   };
 }
 
