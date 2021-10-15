@@ -36,7 +36,8 @@ class CardRepository {
   public updateCard = async (
     cardID: number,
     price: number,
-    apiID: number
+    apiID: number,
+    imageURL: string
   ): Promise<number> => {
     const connection = connectToDB();
 
@@ -44,12 +45,15 @@ class CardRepository {
       return 0;
     }
 
-    const sqlQuery = 'UPDATE Card SET apiID = ?, price = ? WHERE CardID = ?';
+    console.log(cardID, price, apiID, imageURL);
+
+    const sqlQuery =
+      'UPDATE Card SET apiID = ?, price = ?, image = ? WHERE CardID = ?';
 
     return new Promise((resolve, reject) => {
       connection.query(
         sqlQuery,
-        [apiID, price, cardID],
+        [apiID, price, imageURL, cardID],
         function (error, result) {
           if (error) {
             reject(error);

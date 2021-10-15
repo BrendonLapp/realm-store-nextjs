@@ -31,7 +31,16 @@ class CardController {
   };
 
   public updateCard = async (req: Request, res: Response) => {
-    console.log(req.body.data);
+    const cardRepository = new CardRepository();
+    const cardData = req.body.data;
+    const imageURL = `https://storage.googleapis.com/ygoprodeck.com/pics/${cardData.apiID}.jpg`;
+
+    await cardRepository.updateCard(
+      cardData.cardID,
+      cardData.price,
+      cardData.apiID,
+      imageURL
+    );
   };
 
   public addCard = async (card: Card) => {

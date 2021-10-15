@@ -16,10 +16,10 @@ const CardDetailsUpdate = ({
   const [imageIDProp, setImageIDProp] = useState<number>(imageID);
   const [priceProp, setPriceProp] = useState<number>(price);
 
-  const updateCard = async (index: number) => {
+  const updateCard = async () => {
     const cardProvider = new CardProvider();
 
-    await cardProvider.updateCard(cardID, priceProp, imageID);
+    await cardProvider.updateCard(cardID, priceProp, imageIDProp);
   };
 
   const handlePriceChange = (event: any) => {
@@ -68,7 +68,7 @@ const CardDetailsUpdate = ({
             <td>
               <SubmitButton
                 name={'Save Changes'}
-                submitAction={() => updateCard(cardID)}
+                submitAction={() => updateCard()}
               />
             </td>
           </tr>
