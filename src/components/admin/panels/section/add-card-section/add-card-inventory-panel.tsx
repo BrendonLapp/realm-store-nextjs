@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { useEffect, useState } from 'react';
-import CardController from '../../../../../controllers/card-controller';
 import { APIDetails } from '../../../../../types/card';
 import ProductImage from '../../../../store/product-image';
 import AddCardsInventoryDetails from './add-cards-inventory-details';
@@ -14,10 +14,11 @@ const AddCardInventoryPanel = ({ cardName }: AddCardInventoryPanelProps) => {
 
   useEffect(() => {
     const getCardData = async (cardName: string) => {
-      const cardController = new CardController();
-      const apiData = await cardController.getCardFromAPI(cardName);
+      const apiData: any = await axios.get(
+        `/api/admin/card-inventory/search-from-api/by-full-name/${cardName}`
+      );
 
-      setCardData(apiData);
+      setCardData(apiData.data);
       setLoading(false);
     };
 
@@ -25,10 +26,6 @@ const AddCardInventoryPanel = ({ cardName }: AddCardInventoryPanelProps) => {
       getCardData(cardName);
     }
   }, [cardData, loading, cardName]);
-
-  if (loading) {
-    return <div>Loading...</div>;
-  }
 
   if (cardData) {
     return (

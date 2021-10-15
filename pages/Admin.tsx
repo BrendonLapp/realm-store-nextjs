@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import AdminHome from '../src/components/admin/panels/admin-home';
+import AdminHome from '../src/components/admin/admin-home';
 import SideBar from '../src/components/admin/side-bar/side-bar';
 
 const Admin = () => {
@@ -11,9 +11,8 @@ const Admin = () => {
 
   return (
     <>
-      {/* <SideBar setPanel={DisplayPanel} /> */}
-      {/* <div className="left-panel-padding">{panel}</div> */}
-      <div>test</div>
+      <SideBar setPanel={DisplayPanel} />
+      <div className="left-panel-padding">{panel}</div>
     </>
   );
 };

@@ -1,18 +1,17 @@
 import React, { useState } from 'react';
-import { TabDisplay } from '../../../types/card';
-import Tabs from '../tab-nav/tabs';
-import AddCardsByCSV from './section/add-card-section/add-cards-by-csv';
-import AddCardsByName from './section/add-card-section/add-cards-by-name';
+import { TabDisplay } from '../../types/card';
+import AddCardsByName from './panels/add-cards-by-name';
+import Tabs from './tab-nav/tabs';
 
 const TabValues: TabDisplay[] = [
-  {
-    name: 'Add By CSV',
-    Component: <AddCardsByCSV />,
-  },
   {
     name: 'Add By Card Name',
     Component: <AddCardsByName />,
   },
+  // {
+  //   name: 'Add By CSV',
+  //   Component: <AddCardsByCSV />,
+  // },
   // {
   //   name: 'Update Card Inventory',
   //   Component: <UpdateCardInventory />,
@@ -22,7 +21,7 @@ const TabValues: TabDisplay[] = [
 const CardInventory = () => {
   const [tabs] = useState(TabValues);
 
-  const [section, setSection] = useState(<AddCardsByCSV />);
+  const [section, setSection] = useState(<AddCardsByName />);
 
   return (
     <>

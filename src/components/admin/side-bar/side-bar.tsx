@@ -1,8 +1,8 @@
-import AdminHome from '../panels/admin-home';
-import AddCards from '../panels/card-inventory';
 import Profile from './profile';
 import SideNavItem from './side-nav-item';
-import AddSealed from '../panels/sealed-inventory';
+import SealedInventory from '../sealed-inventory';
+import Link from 'next/link';
+import CardInventory from '../card-inventory';
 
 const SideBar = ({ setPanel }: any) => {
   return (
@@ -17,12 +17,12 @@ const SideBar = ({ setPanel }: any) => {
           className="flex-shrink-0 p-3 bg-dark sidebar"
           style={{ width: '280px' }}
         >
-          <button
-            className="d-flex align-items-center text-decoration-none link-light no-background btn btn-toggle"
-            onClick={() => setPanel(<AdminHome />)}
-          >
-            Home
-          </button>
+          <Link href="/Admin">
+            <div className="d-flex align-items-center text-decoration-none link-light no-background btn btn-toggle">
+              Home
+            </div>
+          </Link>
+
           <ul className="list-unstyled ps-0">
             <li className="mb-1">
               <button
@@ -38,12 +38,12 @@ const SideBar = ({ setPanel }: any) => {
                   <SideNavItem
                     name={'Cards Inventory'}
                     setPanel={setPanel}
-                    Panel={AddCards}
+                    Panel={CardInventory}
                   />
                   <SideNavItem
                     name={'Sealed Inventory'}
                     setPanel={setPanel}
-                    Panel={AddSealed}
+                    Panel={SealedInventory}
                   />
                 </ul>
               </div>

@@ -1,5 +1,5 @@
+import axios from 'axios';
 import { useState } from 'react';
-import CardController from '../../../../../controllers/card-controller';
 import { Card, CardSet } from '../../../../../types/card';
 import SubmitButton from '../../../../shared/submit-button';
 
@@ -22,12 +22,10 @@ const AddCardsInventoryRow = ({
   const [price, setPrice] = useState<number>(Number.parseFloat(card.setPrice));
 
   const AddToInventory = async (index: number) => {
-    const cardController = new CardController();
-
-    const apiID = await cardController.getAPIID(
-      cardDetails[index].setName,
-      name
-    );
+    // const apiID = await .getAPIID(
+    //   cardDetails[index].setName,
+    //   name
+    // );
 
     if (printing !== 'select...' && condition !== 'select...') {
       const newCard: Card[] = [
@@ -41,11 +39,12 @@ const AddCardsInventoryRow = ({
           condition: condition,
           rarity: cardDetails[index].setRarity,
           price: price,
-          image: `https://storage.googleapis.com/ygoprodeck.com/pics/${apiID}.jpg`,
         },
       ];
 
-      cardController.addNewCards(newCard);
+      await axios.post('/api/admin/card-inventory/update-inventory', {
+        data: newCard,
+      });
     }
   };
 

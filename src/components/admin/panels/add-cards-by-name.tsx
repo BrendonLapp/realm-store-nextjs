@@ -1,38 +1,39 @@
-import { useState } from 'react';
-import CardController from '../../../../../controllers/card-controller';
-import { APICard } from '../../../../../types/card';
-import SearchBar from '../../../../shared/search-bar';
-import SubmitButton from '../../../../shared/submit-button';
-import AddCardInventoryPanel from './add-card-inventory-panel';
-import AddCardsPanel from './add-cards-panel';
+import axios from 'axios';
+import React, { useState } from 'react';
+import AddCardsPanel from './section/add-card-section/add-cards-panel';
+import SearchBar from '../../shared/search-bar';
+import SubmitButton from '../../shared/submit-button';
+import { APICard } from '../../../types/card';
+import AddCardInventoryPanel from './section/add-card-section/add-card-inventory-panel';
 
-const AddCardsByName = () => {
+const AddCardsByName = ({}) => {
   const [searchParameter, setSearchParameter] = useState('');
-  const [cards, setCards] = useState<APICard[]>();
+  const [cards, setCards] = useState<APICard[] | undefined>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cardName, setCardName] = useState('');
+  const [loading, setLoading] = useState(true);
+  const [search, setSearch] = useState(false);
 
   const processSearch = async () => {
-    const cardController = new CardController();
-
     if (searchParameter !== '') {
-      const responseCards = await cardController.getCardsFromAPI(
-        searchParameter
+      const response: any = await axios.get(
+        `/api/admin/card-inventory/search-from-api/by-partial/${searchParameter}`
       );
 
-      if (typeof responseCards !== 'string') {
-        setCards(responseCards);
+      const data = response.data;
+
+      if (typeof response !== 'string') {
+        setCards(data);
         setErrorMessage('');
         setCardName('');
       } else {
-        setErrorMessage(responseCards);
-        setCards(undefined);
+        setErrorMessage(response);
         setCardName('');
       }
     }
   };
 
-  const viewProduct = async (productName: string) => {
+  const viewProduct = (productName: string) => {
     setCardName(productName);
     setCards(undefined);
   };
