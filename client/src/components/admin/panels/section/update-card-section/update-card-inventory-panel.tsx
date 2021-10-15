@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
 import CardProvider from '../../../../../providers/card-provider';
-import { APIDetails } from '../../../../../types/api-details';
 import { Card } from '../../../../../types/card';
 import ProductImage from '../../../../store/product-image';
+import CardDetailsUpdate from './card-details-update';
 import UpdateCardsInventoryDetails from './update-card-inventory-details';
 
 interface UpdateCardInventoryPanelProps {
@@ -14,6 +14,8 @@ const UpdateCardInventoryPanel = ({
 }: UpdateCardInventoryPanelProps) => {
   const [cardData, setCardData] = useState<Card>();
   const [loading, setLoading] = useState(true);
+  const [imageID, setImageID] = useState<number>(0);
+  const [price, setPrice] = useState<number>(0);
 
   useEffect(() => {
     const getCardData = async (cardID: number) => {
@@ -21,8 +23,11 @@ const UpdateCardInventoryPanel = ({
       const responseData = await cardProvider.getCardByID(cardID);
 
       if (typeof responseData !== 'string') {
-        console.log('effect', responseData);
         setCardData(responseData);
+        if (responseData.apiID && responseData.price) {
+          setImageID(responseData.apiID);
+          setPrice(responseData.price);
+        }
       }
       setLoading(false);
     };
@@ -46,12 +51,14 @@ const UpdateCardInventoryPanel = ({
               imageAlt={cardData.cardName}
             />
           </div>
-          {/* <div style={{ width: '80%' }}>
-            <UpdateCardsInventoryDetails
-              cardDetails={cardData}
-              name={cardData.name}
+          <div style={{ width: '80%' }}>
+            <CardDetailsUpdate
+              cardID={cardID}
+              imageID={imageID}
+              price={price}
             />
-          </div> */}
+            <UpdateCardsInventoryDetails />
+          </div>
         </div>
       </div>
     );

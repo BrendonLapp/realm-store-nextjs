@@ -50,11 +50,15 @@ const AddCardsInventoryRow = ({
   };
 
   const handleQuantityChange = (event: any) => {
-    setQuantity(Number.parseInt(event.target.value));
+    if (Number.parseInt(event.target.value) >= 0) {
+      setQuantity(Number.parseInt(event.target.value));
+    }
   };
 
   const handlePriceChange = (event: any) => {
-    setPrice(Number.parseFloat(event.target.value));
+    if (Number.parseFloat(event.target.value) >= 0.0) {
+      setPrice(Number.parseFloat(event.target.value));
+    }
   };
 
   const handlePrintingChange = (event: any) => {

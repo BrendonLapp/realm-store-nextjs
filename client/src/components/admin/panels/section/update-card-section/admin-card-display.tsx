@@ -28,7 +28,6 @@ const AdminCardDisplay = ({
                 />
                 <AdminCardInfo
                   name={card.cardName}
-                  quantity={card.quantity}
                   setName={card.setName}
                   cardNumber={card.cardNumber}
                 />

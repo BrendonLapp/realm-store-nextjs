@@ -77,7 +77,9 @@ class CardProvider {
     }
   };
 
-  public getAllCardsByPartialName = async (partialName: string) => {
+  public getAllCardsByPartialName = async (
+    partialName: string
+  ): Promise<Card[] | string> => {
     try {
       const apiURL = 'http://localhost:3001';
       const response = await axios.get(
@@ -99,8 +101,6 @@ class CardProvider {
       const response = await axios.get(`${apiURL}/cards/byID/${cardID}`);
 
       const allCards = response.data;
-
-      console.log('provider', allCards);
 
       return allCards[0];
     } catch (error) {

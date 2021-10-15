@@ -1,7 +1,6 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
 import { checkIfCardExists } from '../lib/check-if-card-exists';
-import ConvertPriceToCanadian from '../lib/convert-price-to-canadian';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import InventoryRepository from '../repositories/inventory-repository';
@@ -85,8 +84,6 @@ class CardController {
     const inventoryLevels = await inventoryRepository.getCardInventoryByCardID(
       Number.parseInt(req.params.cardID)
     );
-
-    console.log(inventoryLevels);
 
     res.send(allCards);
   };

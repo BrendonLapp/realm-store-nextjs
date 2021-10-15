@@ -1,4 +1,3 @@
-import { resolve } from 'path/posix';
 import { connectToDB } from '../lib/mysql-connection';
 import { Card } from '../types/card';
 
@@ -38,7 +37,7 @@ class CardRepository {
     const connection = connectToDB();
 
     const sqlQuery =
-      'SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID';
+      'SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
 
     return new Promise((resolve, reject) => {
       connection.query(sqlQuery, function (error, result) {
@@ -57,7 +56,7 @@ class CardRepository {
   ): Promise<Card[]> => {
     const connection = connectToDB();
 
-    const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardName LIKE '%${partialName}%'`;
+    const sqlQuery = `SELECT cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image FROM Card WHERE CardName LIKE '%${partialName}%'`;
 
     return new Promise((resolve, reject) => {
       connection.query(sqlQuery, function (error, result) {
