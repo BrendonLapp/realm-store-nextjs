@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import CardProvider from '../../../../../providers/card-provider';
 import SubmitButton from '../../../../shared/submit-button';
 
 interface CardDetailsUpdateProps {
@@ -15,8 +16,10 @@ const CardDetailsUpdate = ({
   const [imageIDProp, setImageIDProp] = useState<number>(imageID);
   const [priceProp, setPriceProp] = useState<number>(price);
 
-  const updateCard = (index: number) => {
-    console.log(index);
+  const updateCard = async (index: number) => {
+    const cardProvider = new CardProvider();
+
+    await cardProvider.updateCard(cardID, priceProp, imageID);
   };
 
   const handlePriceChange = (event: any) => {

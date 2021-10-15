@@ -17,7 +17,9 @@ const UpdateCardsInventoryDetails = ({}) => {
   };
 
   const handleQuantityChange = (event: any) => {
-    setQuantity(Number.parseInt(event.target.value));
+    if (Number.parseInt(event.target.value) >= 0) {
+      setQuantity(Number.parseInt(event.target.value));
+    }
   };
 
   return (

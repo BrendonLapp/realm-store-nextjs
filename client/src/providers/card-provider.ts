@@ -216,5 +216,12 @@ class CardProvider {
 
     return apiID;
   };
+
+  public updateCard = async (cardID: number, price: number, apiID: number) => {
+    const apiURL = 'http://localhost:3001';
+    await axios.put(`${apiURL}/cards`, {
+      data: { cardID, price, apiID },
+    });
+  };
 }
 export default CardProvider;

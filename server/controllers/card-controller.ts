@@ -30,6 +30,10 @@ class CardController {
     }
   };
 
+  public updateCard = async (req: Request, res: Response) => {
+    console.log(req.body.data);
+  };
+
   public addCard = async (card: Card) => {
     const cardRepository = new CardRepository();
     const apiResponse: ApiResponse = await this.getCardDataFromApi(

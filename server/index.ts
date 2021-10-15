@@ -34,6 +34,11 @@ app.post('/cards', (req: Request, res: Response) => {
   controller.addNewCards(req, res);
 });
 
+app.put('/cards', (req: Request, res: Response) => {
+  const controller = new CardController();
+  controller.updateCard(req, res);
+});
+
 app.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
 });

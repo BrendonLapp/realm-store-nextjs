@@ -33,6 +33,34 @@ class CardRepository {
     });
   };
 
+  public updateCard = async (
+    cardID: number,
+    price: number,
+    apiID: number
+  ): Promise<number> => {
+    const connection = connectToDB();
+
+    if (!cardID && !price && !apiID) {
+      return 0;
+    }
+
+    const sqlQuery = 'UPDATE Card SET apiID = ?, price = ? WHERE CardID = ?';
+
+    return new Promise((resolve, reject) => {
+      connection.query(
+        sqlQuery,
+        [apiID, price, cardID],
+        function (error, result) {
+          if (error) {
+            reject(error);
+          }
+          resolve(result.insertId);
+          connection.end();
+        }
+      );
+    });
+  };
+
   public getCards = async (): Promise<Card[]> => {
     const connection = connectToDB();
 
