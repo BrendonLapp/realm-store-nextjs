@@ -19,9 +19,24 @@ app.get('/cards', (req: Request, res: Response) => {
   controller.getAllCards(req, res);
 });
 
+app.get('/cards/byPartialName/:partialName', (req: Request, res: Response) => {
+  const controller = new CardController();
+  controller.getAllCardsByPartialName(req, res);
+});
+
+app.get('/cards/byID/:cardID', (req: Request, res: Response) => {
+  const controller = new CardController();
+  controller.getCardByCardID(req, res);
+});
+
 app.post('/cards', (req: Request, res: Response) => {
   const controller = new CardController();
   controller.addNewCards(req, res);
+});
+
+app.put('/cards', (req: Request, res: Response) => {
+  const controller = new CardController();
+  controller.updateCard(req, res);
 });
 
 app.listen(PORT, () => {

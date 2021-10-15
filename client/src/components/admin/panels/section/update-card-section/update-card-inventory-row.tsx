@@ -4,19 +4,19 @@ import { CardSet } from '../../../../../types/api-details';
 import { Card } from '../../../../../types/card';
 import SubmitButton from '../../../../shared/submit-button';
 
-interface AddCardsInventoryRowProps {
+interface UpdateCardsInventoryRowProps {
   card: CardSet;
   index: number;
   cardDetails: CardSet[];
   name: string;
 }
 
-const AddCardsInventoryRow = ({
+const UpdateCardsInventoryRow = ({
   card,
   index,
   cardDetails,
   name,
-}: AddCardsInventoryRowProps) => {
+}: UpdateCardsInventoryRowProps) => {
   const [quantity, setQuantity] = useState(0);
   const [condition, setCondition] = useState('select...');
   const [printing, setPrinting] = useState('select...');
@@ -50,15 +50,11 @@ const AddCardsInventoryRow = ({
   };
 
   const handleQuantityChange = (event: any) => {
-    if (Number.parseInt(event.target.value) >= 0) {
-      setQuantity(Number.parseInt(event.target.value));
-    }
+    setQuantity(Number.parseInt(event.target.value));
   };
 
   const handlePriceChange = (event: any) => {
-    if (Number.parseFloat(event.target.value) >= 0.0) {
-      setPrice(Number.parseFloat(event.target.value));
-    }
+    setPrice(Number.parseFloat(event.target.value));
   };
 
   const handlePrintingChange = (event: any) => {
@@ -122,4 +118,4 @@ const AddCardsInventoryRow = ({
   );
 };
 
-export default AddCardsInventoryRow;
+export default UpdateCardsInventoryRow;

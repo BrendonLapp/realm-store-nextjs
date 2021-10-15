@@ -1,4 +1,3 @@
-import { resolve } from 'path/posix';
 import { connectToDB } from '../lib/mysql-connection';
 import { Card } from '../types/card';
 
@@ -34,11 +33,62 @@ class CardRepository {
     });
   };
 
+  public updateCard = async (
+    cardID: number,
+    price: number,
+    apiID: number,
+    imageURL: string
+  ): Promise<number> => {
+    const connection = connectToDB();
+
+    if (!cardID && !price && !apiID) {
+      return 0;
+    }
+
+    console.log(cardID, price, apiID, imageURL);
+
+    const sqlQuery =
+      'UPDATE Card SET apiID = ?, price = ?, image = ? WHERE CardID = ?';
+
+    return new Promise((resolve, reject) => {
+      connection.query(
+        sqlQuery,
+        [apiID, price, imageURL, cardID],
+        function (error, result) {
+          if (error) {
+            reject(error);
+          }
+          resolve(result.insertId);
+          connection.end();
+        }
+      );
+    });
+  };
+
   public getCards = async (): Promise<Card[]> => {
     const connection = connectToDB();
 
     const sqlQuery =
-      'SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID';
+      'SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
+
+    return new Promise((resolve, reject) => {
+      connection.query(sqlQuery, function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        const rows: Card[] = JSON.parse(JSON.stringify(result));
+        connection.end();
+        resolve(rows);
+      });
+    });
+  };
+
+  public getCardsByPartialName = async (
+    partialName: string
+  ): Promise<Card[]> => {
+    const connection = connectToDB();
+
+    const sqlQuery = `SELECT cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image FROM Card WHERE CardName LIKE '%${partialName}%'`;
 
     return new Promise((resolve, reject) => {
       connection.query(sqlQuery, function (error, result) {
@@ -64,6 +114,24 @@ class CardRepository {
           reject(error);
         }
         const rows: Card[] = JSON.parse(JSON.stringify(result));
+        connection.end();
+        resolve(rows);
+      });
+    });
+  };
+
+  public getCardsByCardID = async (cardID: number): Promise<Card> => {
+    const connection = connectToDB();
+
+    const sqlQuery =
+      'SELECT Card.cardID, apiID, cardNumber, printing, rarity, price, image FROM Card WHERE CardID=?';
+
+    return new Promise((resolve, reject) => {
+      connection.query(sqlQuery, [cardID], function (error, result) {
+        if (error) {
+          reject(error);
+        }
+        const rows: Card = JSON.parse(JSON.stringify(result));
         connection.end();
         resolve(rows);
       });

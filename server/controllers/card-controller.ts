@@ -1,9 +1,9 @@
 import axios from 'axios';
 import { Request, Response } from 'express';
 import { checkIfCardExists } from '../lib/check-if-card-exists';
-import ConvertPriceToCanadian from '../lib/convert-price-to-canadian';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
+import InventoryRepository from '../repositories/inventory-repository';
 import { ApiResponse, Card } from '../types/card';
 import { Inventory } from '../types/inventory';
 import InventoryController from './inventory-controller';
@@ -28,6 +28,19 @@ class CardController {
 
       res.sendStatus(200);
     }
+  };
+
+  public updateCard = async (req: Request, res: Response) => {
+    const cardRepository = new CardRepository();
+    const cardData = req.body.data;
+    const imageURL = `https://storage.googleapis.com/ygoprodeck.com/pics/${cardData.apiID}.jpg`;
+
+    await cardRepository.updateCard(
+      cardData.cardID,
+      cardData.price,
+      cardData.apiID,
+      imageURL
+    );
   };
 
   public addCard = async (card: Card) => {
@@ -59,6 +72,31 @@ class CardController {
     const cardRepository = new CardRepository();
 
     const allCards = await cardRepository.getCards();
+
+    res.send(allCards);
+  };
+
+  public getAllCardsByPartialName = async (req: Request, res: Response) => {
+    const cardRepository = new CardRepository();
+
+    const allCards = await cardRepository.getCardsByPartialName(
+      req.params.partialName
+    );
+
+    res.send(allCards);
+  };
+
+  public getCardByCardID = async (req: Request, res: Response) => {
+    const cardRepository = new CardRepository();
+    const inventoryRepository = new InventoryRepository();
+
+    const allCards = await cardRepository.getCardsByCardID(
+      Number.parseInt(req.params.cardID)
+    );
+
+    const inventoryLevels = await inventoryRepository.getCardInventoryByCardID(
+      Number.parseInt(req.params.cardID)
+    );
 
     res.send(allCards);
   };

@@ -77,6 +77,38 @@ class CardProvider {
     }
   };
 
+  public getAllCardsByPartialName = async (
+    partialName: string
+  ): Promise<Card[] | string> => {
+    try {
+      const apiURL = 'http://localhost:3001';
+      const response = await axios.get(
+        `${apiURL}/cards/byPartialName/${partialName}`
+      );
+
+      const allCards = response.data;
+
+      return allCards;
+    } catch (error) {
+      console.error(error);
+      return 'Please try again';
+    }
+  };
+
+  public getCardByID = async (cardID: number): Promise<Card | string> => {
+    try {
+      const apiURL = 'http://localhost:3001';
+      const response = await axios.get(`${apiURL}/cards/byID/${cardID}`);
+
+      const allCards = response.data;
+
+      return allCards[0];
+    } catch (error) {
+      console.error(error);
+      return 'Please try again';
+    }
+  };
+
   public getCardsFromAPI = async (
     cardName: string
   ): Promise<APICard[] | string> => {
@@ -183,6 +215,13 @@ class CardProvider {
     }
 
     return apiID;
+  };
+
+  public updateCard = async (cardID: number, price: number, apiID: number) => {
+    const apiURL = 'http://localhost:3001';
+    await axios.put(`${apiURL}/cards`, {
+      data: { cardID, price, apiID },
+    });
   };
 }
 export default CardProvider;
