@@ -12,7 +12,7 @@ const UpdateCardsInventoryDetails = ({}) => {
   const [cardID, setCardID] = useState(282);
 
   const updateCard = (qualityID: number) => {
-    console.log(cardID, qualityID);
+    console.log(cardID, qualityID, quantity);
   };
 
   const handleQuantityChange = (event: any) => {

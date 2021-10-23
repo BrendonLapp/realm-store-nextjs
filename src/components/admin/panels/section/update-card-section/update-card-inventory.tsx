@@ -18,22 +18,27 @@ const UpdateCardInventory = () => {
   const processSearch = async () => {
     setCardID(0);
     let responseCards: any;
+    try {
+      if (searchParameter === '') {
+        responseCards = await axios.get('/api/general/search/get-all-cards');
+      }
 
-    if (searchParameter === '') {
-      responseCards = await getAllInternalCards();
+      if (searchParameter !== '') {
+        responseCards = await axios.get(
+          `/api/general/search/by-partial-name/${searchParameter}`
+        );
+      }
+
+      if (typeof responseCards !== 'string' && responseCards) {
+        setCards(responseCards.data);
+      } else {
+        setErrorMessage(responseCards);
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
     }
-
-    if (searchParameter !== '') {
-      responseCards = await getAllInternalCardsByPartialName(searchParameter);
-    }
-
-    if (typeof responseCards !== 'string' && responseCards) {
-      setCards(responseCards);
-    } else {
-      setErrorMessage(responseCards);
-    }
-
-    setLoading(false);
   };
 
   const viewProduct = async (productID: number) => {
@@ -43,10 +48,10 @@ const UpdateCardInventory = () => {
 
   useEffect(() => {
     const handleLoad = async () => {
-      let responseCards;
+      let responseCards: any;
 
       if (searchParameter === '') {
-        responseCards = await getAllInternalCards();
+        responseCards = await axios.get('/api/general/search/get-all-cards');
       }
 
       if (typeof responseCards !== 'string') {

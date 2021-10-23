@@ -11,8 +11,6 @@ const AddCardsByName = ({}) => {
   const [cards, setCards] = useState<APICard[] | undefined>([]);
   const [errorMessage, setErrorMessage] = useState('');
   const [cardName, setCardName] = useState('');
-  const [loading, setLoading] = useState(true);
-  const [search, setSearch] = useState(false);
 
   const processSearch = async () => {
     if (searchParameter !== '') {

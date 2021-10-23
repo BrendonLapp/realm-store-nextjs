@@ -11,7 +11,7 @@ const connectToDB = () => {
 
     return connection;
   } catch (error) {
-    console.log(error);
+    console.error(error);
   }
 };
 

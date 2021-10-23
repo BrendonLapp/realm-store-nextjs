@@ -49,8 +49,6 @@ class CardRepository {
         return 0;
       }
 
-      console.log(cardID, price, apiID, imageURL);
-
       const sqlQuery =
         'UPDATE Card SET apiID = ?, price = ?, image = ? WHERE CardID = ?';
 
