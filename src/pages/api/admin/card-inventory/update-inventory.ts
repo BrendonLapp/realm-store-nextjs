@@ -1,9 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next';
-import AddCardsByName from '../../../../components/admin/panels/add-cards-by-name';
-import {
-  addNewCards,
-  getCardsFromAPI,
-} from '../../../../controllers/card-controller';
+import { addNewCards } from '../../../../controllers/card-controller';
 import { APICard } from '../../../../types/card';
 
 export default async function handler(

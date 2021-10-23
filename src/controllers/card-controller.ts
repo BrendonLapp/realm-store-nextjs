@@ -16,6 +16,8 @@ import {
 import { Inventory } from '../types/inventory';
 import InventoryController from './inventory-controller';
 
+//Collection of Card related business logic
+
 const convertFromStringToCsv = async (
   csvData: string
 ): Promise<Card[] | undefined> => {

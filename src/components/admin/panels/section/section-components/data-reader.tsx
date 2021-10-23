@@ -1,6 +1,5 @@
 import axios from 'axios';
 import { FormEvent, useState } from 'react';
-import { addNewCardsByCSV } from '../../../../controllers/card-controller';
 
 const DataReader = () => {
   const [jsonData, setJsonData] = useState<string>('');

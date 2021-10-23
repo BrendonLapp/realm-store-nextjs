@@ -1,10 +1,10 @@
 import axios from 'axios';
 import React, { useState } from 'react';
-import AddCardsPanel from './section/add-card-section/add-cards-panel';
-import SearchBar from '../../shared/search-bar';
-import SubmitButton from '../../shared/submit-button';
-import { APICard } from '../../../types/card';
-import AddCardInventoryPanel from './section/add-card-section/add-card-inventory-panel';
+import SearchBar from '../../../../shared/search-bar';
+import SubmitButton from '../../../../shared/submit-button';
+import { APICard } from '../../../../../types/card';
+import AddCardInventoryPanel from './add-card-inventory-panel';
+import AddCardsPanel from './add-cards-panel';
 
 const AddCardsByName = ({}) => {
   const [searchParameter, setSearchParameter] = useState('');

@@ -7,7 +7,7 @@ export default async function handler(
   res: NextApiResponse<APICard[] | string>
 ) {
   try {
-    await addNewCardsByCSV(req.body.data);
+    console.log(req.body.data.imageID);
     return res.status(200);
   } catch (error) {
     console.error(error);

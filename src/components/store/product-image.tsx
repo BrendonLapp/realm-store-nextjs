@@ -1,5 +1,5 @@
 interface ProductImageProps {
-  imageSource: string;
+  imageSource: string | undefined;
   imageAlt: string;
 }
 
