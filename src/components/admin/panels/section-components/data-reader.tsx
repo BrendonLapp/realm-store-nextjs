@@ -1,5 +1,6 @@
+import axios from 'axios';
 import { FormEvent, useState } from 'react';
-import CardController from '../../../../controllers/card-controller';
+import { addNewCardsByCSV } from '../../../../controllers/card-controller';
 
 const DataReader = () => {
   const [jsonData, setJsonData] = useState<string>('');
@@ -10,10 +11,11 @@ const DataReader = () => {
     setJsonData(csvData);
   };
 
-  const onSubmit = () => {
+  const onSubmit = async () => {
     if (jsonData !== '') {
-      const cardController = new CardController();
-      cardController.addNewCardsByCSV(jsonData);
+      await axios.post('/api/admin/card-inventory/add-by-csv', {
+        data: jsonData,
+      });
     }
   };
 

@@ -2,8 +2,8 @@ import type { NextApiRequest, NextApiResponse } from 'next';
 import {
   getCardFromAPI,
   getCardsFromAPI,
-} from '../../../../../../src/controllers/card-controller';
-import { APICard, APIDetails } from '../../../../../../src/types/card';
+} from '../../../../../../controllers/card-controller';
+import { APICard, APIDetails } from '../../../../../../types/card';
 
 export default async function handler(
   req: NextApiRequest,

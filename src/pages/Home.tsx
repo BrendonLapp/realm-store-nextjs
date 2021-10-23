@@ -1,6 +1,6 @@
-import ProductDisplay from '../src/components/store/product-display';
-import { getAllCards } from '../src/controllers/card-controller';
-import { Card } from '../src/types/card';
+import ProductDisplay from '../components/store/product-display';
+import { getAllCards } from '../controllers/card-controller';
+import { Card } from '../types/card';
 
 interface HomeProps {
   cards?: Card[];

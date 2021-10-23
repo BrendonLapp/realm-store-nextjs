@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { TabDisplay } from '../../types/card';
 import AddCardsByName from './panels/add-cards-by-name';
+import AddCardsByCSV from './panels/section/add-card-section/add-cards-by-csv';
 import Tabs from './tab-nav/tabs';
 
 const TabValues: TabDisplay[] = [
@@ -8,10 +9,10 @@ const TabValues: TabDisplay[] = [
     name: 'Add By Card Name',
     Component: <AddCardsByName />,
   },
-  // {
-  //   name: 'Add By CSV',
-  //   Component: <AddCardsByCSV />,
-  // },
+  {
+    name: 'Add By CSV',
+    Component: <AddCardsByCSV />,
+  },
   // {
   //   name: 'Update Card Inventory',
   //   Component: <UpdateCardInventory />,
