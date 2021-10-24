@@ -1,4 +1,5 @@
-//should split card in the future into an admin and customer display
+//TODO: should split card in the future into an admin and customer display
+//Also should split all the interfaces into different files
 export interface Card {
   cardID?: number;
   apiID?: number;

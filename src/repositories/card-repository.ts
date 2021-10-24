@@ -17,6 +17,7 @@ class CardRepository {
         cardNumber: card.cardNumber,
         rarity: card.rarity,
         price: card.price,
+        manualPricing: card.manualSetPrice,
         image: card.image,
       };
 
@@ -48,6 +49,8 @@ class CardRepository {
         return 0;
       }
 
+      //TODO: When i revisit update, this will need the manual set price here
+      //probably also a way to clear the manual price
       const sqlQuery =
         'UPDATE Card SET apiID = ?, price = ?, image = ? WHERE CardID = ?';
 
