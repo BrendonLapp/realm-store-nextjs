@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Papa from 'papaparse';
 import { checkIfCardExists } from '../lib/check-if-card-exists';
+import checkSpecialPrinting from '../lib/check-special-priting';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import InventoryRepository from '../repositories/inventory-repository';
@@ -40,8 +41,7 @@ const convertFromStringToCsv = async (
       setCode: value.SetCode,
       rarity: value.Rarity,
       printing: value.Printing,
-      specialPrinting:
-        value.specialPrinting === undefined ? null : value.specialPrinting,
+      specialPrinting: checkSpecialPrinting(value.Name),
       condition: value.Condition,
       price: 0.0,
       manualSetPrice: false,

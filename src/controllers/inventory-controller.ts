@@ -2,7 +2,7 @@ import InventoryRepository from '../repositories/inventory-repository';
 import { Inventory } from '../types/inventory';
 
 //Collection of inventory business logic
-
+//TODO: Remove this being in a class
 class InventoryController {
   public addToInventory = async (cardInventory: Inventory) => {
     const inventoryRepository = new InventoryRepository();
