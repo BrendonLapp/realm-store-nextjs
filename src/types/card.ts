@@ -1,3 +1,4 @@
+//should split card in the future into an admin and customer display
 export interface Card {
   cardID?: number;
   apiID?: number;
@@ -12,6 +13,7 @@ export interface Card {
   rarity: string;
   price?: number;
   image?: string;
+  manualSetPrice: boolean;
 }
 
 export interface ApiResponse {

@@ -44,6 +44,7 @@ const convertFromStringToCsv = async (
         value.specialPrinting === undefined ? null : value.specialPrinting,
       condition: value.Condition,
       price: 0.0,
+      manualSetPrice: false,
       image: 'placeholder',
     };
 
