@@ -1,4 +1,3 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import getAllInternalCards from '../../../../../lib/get-all-internal-cards';
 import getAllInternalCardsByPartialName from '../../../../../lib/get-all-internal-cards-by-partial';
@@ -20,13 +19,11 @@ const UpdateCardInventory = () => {
     let responseCards: any;
     try {
       if (searchParameter === '') {
-        responseCards = await axios.get('/api/general/search/get-all-cards');
+        responseCards = await getAllInternalCards();
       }
 
       if (searchParameter !== '') {
-        responseCards = await axios.get(
-          `/api/general/search/by-partial-name/${searchParameter}`
-        );
+        responseCards = await getAllInternalCardsByPartialName(searchParameter);
       }
 
       if (typeof responseCards !== 'string' && responseCards) {
@@ -51,7 +48,7 @@ const UpdateCardInventory = () => {
       let responseCards: any;
 
       if (searchParameter === '') {
-        responseCards = await axios.get('/api/general/search/get-all-cards');
+        responseCards = await getAllInternalCards();
       }
 
       if (typeof responseCards !== 'string') {

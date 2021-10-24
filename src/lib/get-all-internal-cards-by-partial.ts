@@ -8,7 +8,7 @@ const getAllInternalCardsByPartialName = async (
     const response: any = await axios.get(
       `/api/general/search/by-partial-name/${partialName}`
     );
-    return response;
+    return response.data;
   } catch (error) {
     console.error(error);
     return 'Something has gone wrong while getting the card data.';
