@@ -1,10 +1,13 @@
+DROP TABLE CardInventory
+DROP TABLE Quality
+DROP TABLE Card
+
 CREATE TABLE Card (
 	cardID INT NOT NULL auto_increment,
     apiID INT NOT NULL,
     cardName VARCHAR(100) NOT NULL,
     setName VARCHAR(150) NOT NULL,
     cardNumber VARCHAR(10) NOT NULL,
-    printing VARCHAR(20) NOT NULL,
     rarity VARCHAR(50) NOT NULL,
     price DECIMAL(15,2) NOT NULL,
     image VARCHAR(200) NOT NULL,
@@ -26,6 +29,8 @@ CREATE TABLE CardInventory (
     cardID INT NOT NULL,
     qualityID INT NOT NULL,
     quantity INT NOT NULL,
+    printing VARCHAR(20) NOT NULL,
+    specialPrinting VARCHAR(30) NULL,
     
     PRIMARY KEY (CardInventoryID),
     FOREIGN KEY (CardID) REFERENCES Card(CardID),

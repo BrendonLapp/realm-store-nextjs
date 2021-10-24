@@ -11,6 +11,8 @@ class InventoryRepository {
           cardId: cardInventory.cardID,
           qualityId: cardInventory.qualityID,
           quantity: cardInventory.quantity,
+          printing: cardInventory.printing,
+          specialPrinting: cardInventory.specialPrinting,
         };
 
         const sqlQuery = 'INSERT INTO CardInventory SET ?';
@@ -73,20 +75,26 @@ class InventoryRepository {
   public updateCardInventory = (
     cardID: number,
     quality: number,
-    quantity: number
+    quantity: number,
+    printing: string,
+    specialPrinting: string | null
   ) => {
     const connection = connectToDB();
 
     if (connection) {
       const sqlQuery =
-        'UPDATE cardInventory SET quantity = ? WHERE cardID = ? AND qualityID = ?';
+        'UPDATE cardInventory SET quantity = ? WHERE cardID = ? AND qualityID = ? AND printing = ? AND specialPrinting = ?';
 
-      connection.query(sqlQuery, [quantity, cardID, quality], function (error) {
-        if (error) {
-          console.error(error);
+      connection.query(
+        sqlQuery,
+        [quantity, cardID, quality, printing, specialPrinting],
+        function (error) {
+          if (error) {
+            console.error(error);
+          }
+          connection.end();
         }
-        connection.end();
-      });
+      );
     }
   };
 }

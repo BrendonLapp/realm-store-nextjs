@@ -13,7 +13,9 @@ class InventoryController {
   public updateInventory = async (
     cardID: number,
     qualityID: number,
-    quantity: number
+    quantity: number,
+    printing: string,
+    specialPrinting: string | null
   ) => {
     const inventoryRepository = new InventoryRepository();
 
@@ -30,12 +32,20 @@ class InventoryController {
         newQuantity = quantity;
       }
 
-      inventoryRepository.updateCardInventory(cardID, qualityID, newQuantity);
+      inventoryRepository.updateCardInventory(
+        cardID,
+        qualityID,
+        newQuantity,
+        printing,
+        specialPrinting
+      );
     } else {
       const newInventory: Inventory = {
         cardID: cardID,
         qualityID: qualityID,
         quantity: quantity,
+        printing: printing,
+        specialPrinting: specialPrinting,
       };
       await this.addToInventory(newInventory);
     }

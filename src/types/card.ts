@@ -7,6 +7,7 @@ export interface Card {
   cardNumber: string;
   setCode: string;
   printing: string;
+  specialPrinting: string | null;
   condition: string;
   rarity: string;
   price?: number;

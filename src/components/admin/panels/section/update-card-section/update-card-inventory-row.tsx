@@ -40,6 +40,7 @@ const UpdateCardsInventoryRow = ({
         cardNumber: cardDetails[index].setCode,
         setCode: cardDetails[index].setCode,
         printing: printing,
+        specialPrinting: null,
         condition: condition,
         rarity: cardDetails[index].setRarity,
         price: price,

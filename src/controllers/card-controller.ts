@@ -40,6 +40,8 @@ const convertFromStringToCsv = async (
       setCode: value.SetCode,
       rarity: value.Rarity,
       printing: value.Printing,
+      specialPrinting:
+        value.specialPrinting === undefined ? null : value.specialPrinting,
       condition: value.Condition,
       price: 0.0,
       image: 'placeholder',
@@ -83,7 +85,9 @@ const addNewCards = async (cardsData: Card[]) => {
         await inventoryController.updateInventory(
           existingCard[0].cardID,
           qualityID,
-          card.quantity
+          card.quantity,
+          card.printing,
+          card.specialPrinting
         );
       }
     }
@@ -153,6 +157,8 @@ const getCardByCardID = async (cardID: number): Promise<Card | undefined> => {
 
   const allCards = await cardRepository.getCardsByCardID(cardID);
 
+  //need to return an object here that will give all the inventroy of the card ID with all the inventory info.
+  //maybe an interface just for this?
   const inventoryLevels = await inventoryRepository.getCardInventoryByCardID(
     cardID
   );
@@ -170,6 +176,8 @@ const addCardToInventory = (card: Card) => {
       cardID: card.cardID,
       qualityID: qualityID,
       quantity: card.quantity,
+      printing: card.printing,
+      specialPrinting: card.printing,
     };
 
     inventoryController.addToInventory(inventoryValues);

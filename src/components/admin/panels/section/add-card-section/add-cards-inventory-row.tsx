@@ -36,6 +36,7 @@ const AddCardsInventoryRow = ({
           cardNumber: cardDetails[index].setCode,
           setCode: cardDetails[index].setCode,
           printing: printing,
+          specialPrinting: null, //this might need to be able to be set to 'green' 'blue' 'purple' 'null' in the future
           condition: condition,
           rarity: cardDetails[index].setRarity,
           price: price,

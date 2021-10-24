@@ -15,7 +15,6 @@ class CardRepository {
         cardName: card.cardName,
         setName: card.setName,
         cardNumber: card.cardNumber,
-        printing: card.printing,
         rarity: card.rarity,
         price: card.price,
         image: card.image,
@@ -74,7 +73,7 @@ class CardRepository {
 
     if (connection) {
       const sqlQuery =
-        'SELECT Card.cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
+        'SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.priting, cardInventory.specialPrinting, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
@@ -96,7 +95,7 @@ class CardRepository {
     const connection = connectToDB();
 
     if (connection) {
-      const sqlQuery = `SELECT cardID, apiID, cardName, setName, cardNumber, printing, rarity, price, image FROM Card WHERE CardName LIKE '%${partialName}%'`;
+      const sqlQuery = `SELECT cardID, apiID, cardName, setName, cardNumber, rarity, price, image FROM Card WHERE CardName LIKE '%${partialName}%'`;
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
@@ -144,7 +143,7 @@ class CardRepository {
 
     if (connection) {
       const sqlQuery =
-        'SELECT Card.cardID, apiID, cardNumber, printing, rarity, price, image FROM Card WHERE CardID=?';
+        'SELECT Card.cardID, apiID, cardNumber, rarity, price, image FROM Card WHERE CardID=?';
 
       return new Promise((resolve, reject) => {
         connection.query(
