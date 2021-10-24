@@ -2,7 +2,7 @@ import InventoryRepository from '../repositories/inventory-repository';
 import { Inventory } from '../types/inventory';
 
 //Collection of inventory business logic
-
+//TODO: Remove this being in a class
 class InventoryController {
   public addToInventory = async (cardInventory: Inventory) => {
     const inventoryRepository = new InventoryRepository();
@@ -13,7 +13,9 @@ class InventoryController {
   public updateInventory = async (
     cardID: number,
     qualityID: number,
-    quantity: number
+    quantity: number,
+    printing: string,
+    specialPrinting: string | null
   ) => {
     const inventoryRepository = new InventoryRepository();
 
@@ -30,12 +32,20 @@ class InventoryController {
         newQuantity = quantity;
       }
 
-      inventoryRepository.updateCardInventory(cardID, qualityID, newQuantity);
+      inventoryRepository.updateCardInventory(
+        cardID,
+        qualityID,
+        newQuantity,
+        printing,
+        specialPrinting
+      );
     } else {
       const newInventory: Inventory = {
         cardID: cardID,
         qualityID: qualityID,
         quantity: quantity,
+        printing: printing,
+        specialPrinting: specialPrinting,
       };
       await this.addToInventory(newInventory);
     }

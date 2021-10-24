@@ -1,3 +1,5 @@
+//TODO: should split card in the future into an admin and customer display
+//Also should split all the interfaces into different files
 export interface Card {
   cardID?: number;
   apiID?: number;
@@ -7,10 +9,12 @@ export interface Card {
   cardNumber: string;
   setCode: string;
   printing: string;
+  specialPrinting: string | null;
   condition: string;
   rarity: string;
   price?: number;
   image?: string;
+  manualSetPrice: boolean;
 }
 
 export interface ApiResponse {

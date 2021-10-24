@@ -2,19 +2,22 @@
 
 ## To Run Locally
 
-1. In the project directory, you can run: `yarn start`
+1. In the project directory and in a terminal, you can run: `yarn build` to generate all the needed Next JS files.
+1. In the project directory and in a terminal, you can run: `yarn start` to start the application
 1. Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
-#### Other Available Commands
+#### Available Commands
 
 1. `yarn test`
 1. `yarn build`
+1. `yarn start`
 
 ## Tech used
 
 - TypeScript
 - React
+- [NextJS](https://nextjs.org/)
 - Node JS
-- Express
+- Yarn
 - MySql
 - [Yu-Gi-Oh DB API](https://db.ygoprodeck.com/api-guide/)

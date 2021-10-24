@@ -3,4 +3,6 @@ export interface Inventory {
   cardID: number;
   qualityID: number;
   quantity: number;
+  printing: string;
+  specialPrinting?: string | null;
 }

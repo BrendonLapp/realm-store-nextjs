@@ -19,14 +19,10 @@ const AddCardsInventoryRow = ({
   const [quantity, setQuantity] = useState(0);
   const [condition, setCondition] = useState('select...');
   const [printing, setPrinting] = useState('select...');
+  const [manualPrice, setManualPrice] = useState(false);
   const [price, setPrice] = useState<number>(Number.parseFloat(card.setPrice));
 
   const AddToInventory = async (index: number) => {
-    // const apiID = await .getAPIID(
-    //   cardDetails[index].setName,
-    //   name
-    // );
-
     if (printing !== 'select...' && condition !== 'select...') {
       const newCard: Card[] = [
         {
@@ -36,9 +32,11 @@ const AddCardsInventoryRow = ({
           cardNumber: cardDetails[index].setCode,
           setCode: cardDetails[index].setCode,
           printing: printing,
+          specialPrinting: null, //TODO: this might need to be able to be set to 'green' 'blue' 'purple' 'null' in the future
           condition: condition,
           rarity: cardDetails[index].setRarity,
           price: price,
+          manualSetPrice: manualPrice,
         },
       ];
 
@@ -61,6 +59,7 @@ const AddCardsInventoryRow = ({
   const handlePriceChange = (event: any) => {
     if (Number.parseFloat(event.target.value) >= 0.0) {
       setPrice(Number.parseFloat(event.target.value));
+      setManualPrice(true);
     }
   };
 

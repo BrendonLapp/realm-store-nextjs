@@ -1,6 +1,7 @@
 import axios from 'axios';
 import Papa from 'papaparse';
 import { checkIfCardExists } from '../lib/check-if-card-exists';
+import checkSpecialPrinting from '../lib/check-special-priting';
 import pickQuality from '../lib/pick-quality';
 import CardRepository from '../repositories/card-repository';
 import InventoryRepository from '../repositories/inventory-repository';
@@ -40,8 +41,10 @@ const convertFromStringToCsv = async (
       setCode: value.SetCode,
       rarity: value.Rarity,
       printing: value.Printing,
+      specialPrinting: checkSpecialPrinting(value.Name),
       condition: value.Condition,
       price: 0.0,
+      manualSetPrice: false,
       image: 'placeholder',
     };
 
@@ -83,7 +86,9 @@ const addNewCards = async (cardsData: Card[]) => {
         await inventoryController.updateInventory(
           existingCard[0].cardID,
           qualityID,
-          card.quantity
+          card.quantity,
+          card.printing,
+          card.specialPrinting
         );
       }
     }
@@ -153,6 +158,8 @@ const getCardByCardID = async (cardID: number): Promise<Card | undefined> => {
 
   const allCards = await cardRepository.getCardsByCardID(cardID);
 
+  //need to return an object here that will give all the inventroy of the card ID with all the inventory info.
+  //maybe an interface just for this?
   const inventoryLevels = await inventoryRepository.getCardInventoryByCardID(
     cardID
   );
@@ -170,6 +177,8 @@ const addCardToInventory = (card: Card) => {
       cardID: card.cardID,
       qualityID: qualityID,
       quantity: card.quantity,
+      printing: card.printing,
+      specialPrinting: card.printing,
     };
 
     inventoryController.addToInventory(inventoryValues);
