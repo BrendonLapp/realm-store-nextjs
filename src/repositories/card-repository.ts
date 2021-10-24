@@ -73,7 +73,7 @@ class CardRepository {
 
     if (connection) {
       const sqlQuery =
-        'SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.priting, cardInventory.specialPrinting, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
+        'SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
