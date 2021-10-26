@@ -21,7 +21,7 @@ class CardRepository {
         image: card.image,
       };
 
-      const sqlQuery = 'INSERT INTO Card SET ?';
+      const sqlQuery = `INSERT INTO Card SET ?`;
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, payload, function (error: any, result: any) {
@@ -52,8 +52,7 @@ class CardRepository {
 
       //TODO: When i revisit update, this will need the manual set price here
       //probably also a way to clear the manual price
-      const sqlQuery =
-        'UPDATE Card SET apiID = ?, price = ?, image = ? WHERE CardID = ?';
+      const sqlQuery = `UPDATE Card SET apiID = ?, price = ?, image = ? WHERE CardID = ?`;
 
       return new Promise((resolve, reject) => {
         connection.query(
@@ -76,8 +75,12 @@ class CardRepository {
     const connection = connectToDB();
 
     if (connection) {
-      const sqlQuery =
-        'SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, rarity, price, image, quantity, qualityName, percentageOff FROM Card INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID WHERE CardInventory.QualityID = 1';
+      const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
+        rarity, price, image, sum(quantity) 
+        FROM Card 
+        INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
+        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID 
+        WHERE CardInventory.QualityID = 1`;
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
@@ -119,8 +122,7 @@ class CardRepository {
     const connection = connectToDB();
 
     if (connection) {
-      const sqlQuery =
-        'SELECT Card.cardID, cardNumber FROM Card WHERE cardNumber=?';
+      const sqlQuery = `SELECT Card.cardID, cardNumber FROM Card WHERE cardNumber=?`;
 
       return new Promise((resolve, reject) => {
         connection.query(
@@ -146,8 +148,7 @@ class CardRepository {
     const connection = connectToDB();
 
     if (connection) {
-      const sqlQuery =
-        'SELECT Card.cardID, apiID, cardNumber, rarity, price, image FROM Card WHERE CardID=?';
+      const sqlQuery = `SELECT Card.cardID, apiID, cardNumber, rarity, price, image FROM Card WHERE CardID=?`;
 
       return new Promise((resolve, reject) => {
         connection.query(
@@ -172,7 +173,7 @@ class CardRepository {
 
     if (connection) {
       const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
-        rarity, price, image, quantity, qualityName, percentageOff 
+        rarity, price, image, sum(quantity) 
         FROM Card 
         INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
         INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID 
