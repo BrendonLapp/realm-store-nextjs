@@ -44,6 +44,7 @@ const UpdateCardsInventoryRow = ({
         condition: condition,
         rarity: cardDetails[index].setRarity,
         price: price,
+        manualSetPrice: false,
         image: `https://storage.googleapis.com/ygoprodeck.com/pics/${apiID}.jpg`,
       };
 

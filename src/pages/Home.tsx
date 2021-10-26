@@ -1,5 +1,5 @@
 import ProductDisplay from '../components/store/product-display';
-import { getAllCards } from '../controllers/card-controller';
+import { getHomePageCards } from '../controllers/card-controller';
 import { Card } from '../types/card';
 
 interface HomeProps {
@@ -7,7 +7,7 @@ interface HomeProps {
   error?: string;
 }
 
-const Home = ({ cards, error }: HomeProps) => {
+const Home = ({ cards }: HomeProps) => {
   return (
     <>
       <div>
@@ -19,7 +19,7 @@ const Home = ({ cards, error }: HomeProps) => {
 };
 
 export async function getStaticProps() {
-  const allCards = await getAllCards();
+  const allCards = await getHomePageCards();
 
   if (allCards) {
     return {

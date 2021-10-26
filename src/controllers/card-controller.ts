@@ -33,22 +33,23 @@ const convertFromStringToCsv = async (
   const convertedData: Card[] = [];
 
   for (const value of jsonData.data) {
-    const newCard: Card = {
-      quantity: value.Quantity,
-      cardName: value.Name,
-      setName: value.Set,
-      cardNumber: value.CardNumber,
-      setCode: value.SetCode,
-      rarity: value.Rarity,
-      printing: value.Printing,
-      specialPrinting: checkSpecialPrinting(value.Name),
-      condition: value.Condition,
-      price: 0.0,
-      manualSetPrice: false,
-      image: 'placeholder',
-    };
-
-    convertedData.push(newCard);
+    if (value.Name) {
+      const newCard: Card = {
+        quantity: value.Quantity,
+        cardName: value.Name,
+        setName: value.Set,
+        cardNumber: value.CardNumber,
+        setCode: value.SetCode,
+        rarity: value.Rarity,
+        printing: value.Printing,
+        specialPrinting: checkSpecialPrinting(value.Name),
+        condition: value.Condition,
+        price: 0.0,
+        manualSetPrice: false,
+        image: 'placeholder',
+      };
+      convertedData.push(newCard);
+    }
   }
 
   return convertedData;
@@ -111,21 +112,27 @@ const addNewCards = async (cardsData: Card[]) => {
 const addCard = async (card: Card) => {
   const cardRepository = new CardRepository();
   try {
-    const apiResponse: ApiResponse = await getCardDataFromApi(card.cardNumber);
+    setTimeout(async function () {
+      const apiResponse: ApiResponse = await getCardDataFromApi(
+        card.cardNumber
+      );
 
-    card.apiID = apiResponse.apiID;
-    card.price = apiResponse.price;
-    card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
+      console.log(apiResponse);
 
-    if (!card.price) {
-      card.price = 0;
-    }
+      card.apiID = apiResponse.apiID;
+      card.price = apiResponse.price;
+      card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
 
-    if (card.apiID) {
-      const cardID = await cardRepository.insertCard(card);
-      card.cardID = cardID;
-      addCardToInventory(card);
-    }
+      if (!card.price) {
+        card.price = 0;
+      }
+
+      if (card.apiID) {
+        const cardID = await cardRepository.insertCard(card);
+        card.cardID = cardID;
+        addCardToInventory(card);
+      }
+    }, 100);
   } catch (error) {
     console.error(error);
   }
@@ -140,6 +147,17 @@ const getAllCards = async (): Promise<Card[] | undefined> => {
     return allCards;
   }
   return undefined;
+};
+
+const getHomePageCards = async (): Promise<Card[]> => {
+  const cardRepository = new CardRepository();
+
+  const cards = await cardRepository.getHomePageCards();
+
+  if (cards) {
+    return cards;
+  }
+  return [];
 };
 
 const getAllCardsByPartialName = async (
@@ -190,18 +208,22 @@ const getCardDataFromApi = async (cardNumber: string): Promise<ApiResponse> => {
     return { apiID: 0, price: 0 };
   }
 
-  const yugiohURL = process.env.YUGIOH_API;
-  const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
-  const response = await axios.get(APIUrl);
+  setTimeout(async function () {
+    const yugiohURL = process.env.YUGIOH_API;
+    const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
+    const response = await axios.get(APIUrl);
 
-  const data: any = response.data;
+    const data: any = response.data;
 
-  const returnData: ApiResponse = {
-    apiID: data.id,
-    price: data.set_price,
-  };
+    const returnData: ApiResponse = {
+      apiID: data.id,
+      price: data.set_price,
+    };
 
-  return returnData;
+    return returnData;
+  });
+
+  return { apiID: 0, price: 0 };
 };
 
 const getCardsFromAPI = async (
@@ -316,6 +338,7 @@ export {
   addCard,
   getAllCards,
   getAllCardsByPartialName,
+  getHomePageCards,
   getCardByCardID,
   addCardToInventory,
   getCardDataFromApi,

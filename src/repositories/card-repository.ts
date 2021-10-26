@@ -28,6 +28,7 @@ class CardRepository {
           if (error) {
             reject(error);
           }
+          console.log(result);
           resolve(result.insertId);
           connection.end();
         });
@@ -161,6 +162,33 @@ class CardRepository {
             resolve(rows);
           }
         );
+      });
+    }
+    return undefined;
+  };
+
+  public getHomePageCards = async (): Promise<Card[] | undefined> => {
+    const connection = connectToDB();
+
+    if (connection) {
+      const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
+        rarity, price, image, quantity, qualityName, percentageOff 
+        FROM Card 
+        INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
+        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID 
+        WHERE CardInventory.QualityID = 1 
+        ORDER BY RAND() 
+        LIMIT 8`;
+
+      return new Promise((resolve, reject) => {
+        connection.query(sqlQuery, function (error: any, result: any) {
+          if (error) {
+            reject(error);
+          }
+          const rows: Card[] = JSON.parse(JSON.stringify(result));
+          connection.end();
+          resolve(rows);
+        });
       });
     }
     return undefined;

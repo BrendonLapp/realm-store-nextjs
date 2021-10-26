@@ -1,4 +1,5 @@
 const checkSpecialPrinting = (cardName: string): string | null => {
+  console.log(cardName);
   if (cardName.includes('Green')) {
     return 'Green';
   }
