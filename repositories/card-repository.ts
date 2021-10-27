@@ -79,17 +79,19 @@ class CardRepository {
 
     if (connection) {
       const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
-        rarity, price, image, sum(quantity) 
+        rarity, price, sum(quantity) AS quantity, image
         FROM Card 
         INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
-        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID 
-        WHERE CardInventory.QualityID = 1`;
+        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID `;
+
+      console.log(sqlQuery);
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
           if (error) {
             reject(error);
           }
+          console.log(result);
           const rows: Card[] = JSON.parse(JSON.stringify(result));
           connection.end();
           resolve(rows);
@@ -176,11 +178,10 @@ class CardRepository {
 
     if (connection) {
       const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
-        rarity, price, image, sum(quantity) 
+        rarity, price, image, sum(quantity) AS quantity
         FROM Card 
         INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
-        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID 
-        WHERE CardInventory.QualityID = 1 
+        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID
         ORDER BY RAND() 
         LIMIT 8`;
 

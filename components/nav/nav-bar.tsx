@@ -22,7 +22,7 @@ const NavBar = () => {
         <div className="collapse navbar-collapse" id="navbarSupportedContent">
           <ul className="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
             <NavItem name="Home" link="/" />
-            <NavItem name="Admin" link="/Admin" />
+            <NavItem name="Admin" link="/admin" />
           </ul>
           <CartBox numberInCart={0} />
         </div>
