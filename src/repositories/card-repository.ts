@@ -23,11 +23,14 @@ class CardRepository {
 
       const sqlQuery = `INSERT INTO Card SET ?`;
 
+      console.log(payload);
+
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, payload, function (error: any, result: any) {
           if (error) {
             reject(error);
           }
+          console.log(error);
           console.log(result);
           resolve(result.insertId);
           connection.end();

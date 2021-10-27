@@ -70,28 +70,32 @@ const addNewCardsByCSV = async (csvData: string) => {
 const addNewCards = async (cardsData: Card[]) => {
   const inventoryController = new InventoryController();
   for (const card of cardsData) {
-    const existingCard = await checkIfCardExists(card.cardNumber);
+    try {
+      const existingCard = await checkIfCardExists(card.cardNumber);
 
-    if (!card.image) {
-      const apiID = await getAPIID(card.setName, card.cardName);
+      if (!card.image) {
+        const apiID = await getAPIID(card.setName, card.cardName);
 
-      card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiID}.jpg`;
-    }
-
-    const qualityID = pickQuality(card.condition);
-
-    if (!existingCard) {
-      addCard(card);
-    } else {
-      if (existingCard[0].cardID && qualityID) {
-        await inventoryController.updateInventory(
-          existingCard[0].cardID,
-          qualityID,
-          card.quantity,
-          card.printing,
-          card.specialPrinting
-        );
+        card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiID}.jpg`;
       }
+
+      const qualityID = pickQuality(card.condition);
+
+      if (!existingCard) {
+        addCard(card);
+      } else {
+        if (existingCard[0].cardID && qualityID) {
+          await inventoryController.updateInventory(
+            existingCard[0].cardID,
+            qualityID,
+            card.quantity,
+            card.printing,
+            card.specialPrinting
+          );
+        }
+      }
+    } catch (error) {
+      console.error(error);
     }
   }
 };
@@ -132,7 +136,7 @@ const addCard = async (card: Card) => {
         card.cardID = cardID;
         addCardToInventory(card);
       }
-    }, 100);
+    }, 500);
   } catch (error) {
     console.error(error);
   }
