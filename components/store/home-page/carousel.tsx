@@ -1,8 +1,8 @@
 import Slider from 'react-slick';
-import { GalleryImages } from '../../../types/gallery-images';
+import { GalleryImage } from '../../../types/gallery-images';
 
 interface CarouselProps {
-  images: GalleryImages[];
+  images: GalleryImage[];
 }
 
 const Carousel = ({ images }: CarouselProps) => {
@@ -21,7 +21,7 @@ const Carousel = ({ images }: CarouselProps) => {
     <div>
       <Slider {...settings}>
         {images &&
-          images.map((image: GalleryImages, index: number) => (
+          images.map((image: GalleryImage, index: number) => (
             <div key="index">
               <img src={image.imageLink} alt={image.altName} />
             </div>

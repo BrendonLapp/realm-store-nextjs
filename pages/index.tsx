@@ -3,12 +3,12 @@ import ProductDisplay from '../components/store/product-display';
 import { getHomePageCards } from '../controllers/card-controller';
 import { getGalleryImages } from '../controllers/gallery-controller';
 import { Card } from '../types/card';
-import { GalleryImages } from '../types/gallery-images';
+import { GalleryImage } from '../types/gallery-images';
 
 interface HomeProps {
   cards?: Card[];
   error?: string;
-  galleryImages: GalleryImages[];
+  galleryImages: GalleryImage[];
 }
 
 const Home = ({ cards, galleryImages }: HomeProps) => {
@@ -30,6 +30,8 @@ const Home = ({ cards, galleryImages }: HomeProps) => {
 export async function getStaticProps() {
   const allCards = await getHomePageCards();
   const images = await getGalleryImages();
+
+  console.log(images);
 
   if (allCards) {
     return {

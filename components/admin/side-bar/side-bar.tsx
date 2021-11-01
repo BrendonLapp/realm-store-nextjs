@@ -3,6 +3,7 @@ import SideNavItem from './side-nav-item';
 import SealedInventory from '../sealed-inventory';
 import Link from 'next/link';
 import CardInventory from '../card-inventory';
+import GalleryUpdate from '../panels/section/store-functions/gallery-update';
 
 const SideBar = ({ setPanel }: any) => {
   return (
@@ -44,6 +45,25 @@ const SideBar = ({ setPanel }: any) => {
                     name={'Sealed Inventory'}
                     setPanel={setPanel}
                     Panel={SealedInventory}
+                  />
+                </ul>
+              </div>
+            </li>
+            <li className="mb-1">
+              <button
+                className="btn btn-toggle align-items-center rounded collapsed link-light no-padding"
+                data-bs-toggle="collapse"
+                data-bs-target="#home-collapse"
+                aria-expanded="true"
+              >
+                Store functions
+              </button>
+              <div className="collapse show" id="home-collapse">
+                <ul className="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                  <SideNavItem
+                    name={'Gallery'}
+                    setPanel={setPanel}
+                    Panel={GalleryUpdate}
                   />
                 </ul>
               </div>

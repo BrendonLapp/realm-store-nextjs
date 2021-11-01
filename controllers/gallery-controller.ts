@@ -1,7 +1,7 @@
 import GalleryRepository from '../repositories/gallery-repository';
-import { GalleryImages } from '../types/gallery-images';
+import { GalleryImage } from '../types/gallery-images';
 
-const getGalleryImages = async (): Promise<GalleryImages[] | undefined> => {
+const getGalleryImages = async (): Promise<GalleryImage[] | undefined> => {
   try {
     const galleryRepository = new GalleryRepository();
     const images = galleryRepository.getGalleryImages();
@@ -16,10 +16,29 @@ const getGalleryImages = async (): Promise<GalleryImages[] | undefined> => {
   }
 };
 
-const updateGalleryImages = async (): Promise<string> => {
+const getAdminGalleryImages = async (): Promise<GalleryImage[] | undefined> => {
   try {
     const galleryRepository = new GalleryRepository();
-    const success: number = await galleryRepository.updateGalleryImages();
+    const images = galleryRepository.getAdminGalleryImages();
+
+    if (images) {
+      return images;
+    }
+    return [];
+  } catch (error) {
+    console.error(error);
+    return undefined;
+  }
+};
+
+const updateGalleryImages = async (
+  galleryImage: GalleryImage
+): Promise<string> => {
+  try {
+    const galleryRepository = new GalleryRepository();
+    const success: number = await galleryRepository.updateGalleryImages(
+      galleryImage
+    );
 
     if (success === 1) {
       return 'Update succeeded';
@@ -31,4 +50,4 @@ const updateGalleryImages = async (): Promise<string> => {
   }
 };
 
-export { getGalleryImages };
+export { getGalleryImages, getAdminGalleryImages, updateGalleryImages };
