@@ -18,8 +18,8 @@ const PriceBox = ({
   return (
     <div className="card-body">
       <div className="text-center" style={{ color: 'black' }}>
-        <h5 className="bold">{name}</h5>
-        <p className="margin-bottom-0" style={{ fontSize: '1rem' }}>
+        <h5 className="bold card-title-sizing">{name}</h5>
+        <p className="card-title-sizing" style={{ fontSize: '1rem' }}>
           {setName}
         </p>
         <p className="margin-bottom-0" style={{ fontSize: '1rem' }}>

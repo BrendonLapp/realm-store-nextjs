@@ -20,7 +20,7 @@ INSERT INTO Quality
 VALUES 
 (4, "Heavily Played", "MP", 15.0);
 
---Gallery preloads
+-- Gallery preloads
 INSERT INTO Gallery
 (imageID, imageLink, altName)
 VALUES

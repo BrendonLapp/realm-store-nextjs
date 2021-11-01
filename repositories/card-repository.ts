@@ -23,14 +23,11 @@ class CardRepository {
 
       const sqlQuery = `INSERT INTO Card SET ?`;
 
-      console.log(payload);
-
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, payload, function (error: any, result: any) {
           if (error) {
             reject(error);
           }
-          console.log(error);
           console.log(result);
           resolve(result.insertId);
           connection.end();
@@ -175,8 +172,9 @@ class CardRepository {
     const connection = connectToDB();
 
     if (connection) {
+      //TODO: need to figure out how to get the quantity in to this query
       const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
-        rarity, price, image, sum(quantity) AS quantity
+        rarity, price, image
         FROM Card 
         INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
         INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID

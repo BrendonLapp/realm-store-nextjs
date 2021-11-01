@@ -31,8 +31,6 @@ export async function getStaticProps() {
   const allCards = await getHomePageCards();
   const images = await getGalleryImages();
 
-  console.log(images);
-
   if (allCards) {
     return {
       props: {

@@ -30,19 +30,25 @@ const GalleryUpdate = () => {
   return (
     <>
       <div style={{ paddingTop: '2%', paddingLeft: '2%', paddingRight: '2%' }}>
-        <tr>
-          <td>Alt Name</td>
-          <td>Link</td>
-        </tr>
-        {galleryImages &&
-          galleryImages.map((image: GalleryImage, index: number) => (
-            <GalleryImageRow
-              linkSrc={image.imageLink}
-              nameAlt={image.altName}
-              imageID={image.imageID}
-              key={index}
-            />
-          ))}
+        <table style={{ width: '100%' }}>
+          <thead>
+            <tr>
+              <td>Alt Name</td>
+              <td>Link</td>
+            </tr>
+          </thead>
+          <tbody>
+            {galleryImages &&
+              galleryImages.map((image: GalleryImage, index: number) => (
+                <GalleryImageRow
+                  linkSrc={image.imageLink}
+                  nameAlt={image.altName}
+                  imageID={image.imageID}
+                  key={index}
+                />
+              ))}
+          </tbody>
+        </table>
       </div>
     </>
   );

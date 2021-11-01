@@ -18,6 +18,11 @@ html {
   font-weight: bold;
 }
 
+.card-title-sizing {
+  height: 20px;
+  margin-bottom: 30px;
+}
+
 .red-text {
   color: rgb(204, 38, 38);
 }

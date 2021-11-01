@@ -37,7 +37,7 @@ const GalleryImageRow = ({
   };
 
   return (
-    <tr style={{ display: 'flex' }}>
+    <tr>
       <td style={{ width: '30%' }}>
         <div className="form-group">
           <input

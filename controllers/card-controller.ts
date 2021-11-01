@@ -118,7 +118,7 @@ const addCard = async (card: Card) => {
   const cardRepository = new CardRepository();
   try {
     setTimeout(async function () {
-      console.log(card.cardNumber);
+      console.log('addCard number', card.cardNumber);
       const apiResponse = await getCardDataFromApi(card.cardNumber);
 
       if (apiResponse) {
@@ -215,20 +215,17 @@ const getCardDataFromApi = async (
   }
 
   try {
-    setTimeout(async function () {
-      const yugiohURL = process.env.YUGIOH_API;
-      const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
-      const response = await axios.get(APIUrl);
+    const yugiohURL = process.env.YUGIOH_API;
+    const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
+    const response = await axios.get(APIUrl);
 
-      const data: any = response.data;
+    const data: any = response.data;
+    const returnData: ApiResponse = {
+      apiID: data.id,
+      price: data.set_price,
+    };
 
-      const returnData: ApiResponse = {
-        apiID: data.id,
-        price: data.set_price,
-      };
-
-      return returnData;
-    });
+    return returnData;
   } catch (error) {
     console.error(error);
     return { apiID: 0, price: 0 };
