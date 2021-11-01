@@ -84,8 +84,6 @@ class CardRepository {
         INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
         INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID `;
 
-      console.log(sqlQuery);
-
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
           if (error) {

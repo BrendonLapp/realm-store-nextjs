@@ -1,10 +1,15 @@
 import Slider from 'react-slick';
+import { GalleryImages } from '../../../types/gallery-images';
 
-const Carousel = () => {
+interface CarouselProps {
+  images: GalleryImages[];
+}
+
+const Carousel = ({ images }: CarouselProps) => {
   const settings = {
     dots: true,
     infinite: true,
-    speed: 500,
+    speed: 1500,
     slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: true,
@@ -15,24 +20,12 @@ const Carousel = () => {
   return (
     <div>
       <Slider {...settings}>
-        <div>
-          <h3>1</h3>
-        </div>
-        <div>
-          <h3>2</h3>
-        </div>
-        <div>
-          <h3>3</h3>
-        </div>
-        <div>
-          <h3>4</h3>
-        </div>
-        <div>
-          <h3>5</h3>
-        </div>
-        <div>
-          <h3>6</h3>
-        </div>
+        {images &&
+          images.map((image: GalleryImages, index: number) => (
+            <div key="index">
+              <img src={image.imageLink} alt={image.altName} />
+            </div>
+          ))}
       </Slider>
     </div>
   );

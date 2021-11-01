@@ -100,6 +100,7 @@ const addNewCards = async (cardsData: Card[]) => {
   }
 };
 
+//TODO Add update card
 // public updateCard = async (req: Request, res: Response) => {
 //   const cardRepository = new CardRepository();
 //   const cardData = req.body.data;
@@ -117,26 +118,25 @@ const addCard = async (card: Card) => {
   const cardRepository = new CardRepository();
   try {
     setTimeout(async function () {
-      const apiResponse: ApiResponse = await getCardDataFromApi(
-        card.cardNumber
-      );
+      console.log(card.cardNumber);
+      const apiResponse = await getCardDataFromApi(card.cardNumber);
 
-      console.log(apiResponse);
+      if (apiResponse) {
+        card.apiID = apiResponse.apiID;
+        card.price = apiResponse.price;
+        card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
 
-      card.apiID = apiResponse.apiID;
-      card.price = apiResponse.price;
-      card.image = `https://storage.googleapis.com/ygoprodeck.com/pics/${apiResponse.apiID}.jpg`;
+        if (!card.price) {
+          card.price = 0;
+        }
 
-      if (!card.price) {
-        card.price = 0;
+        if (card.apiID) {
+          const cardID = await cardRepository.insertCard(card);
+          card.cardID = cardID;
+          addCardToInventory(card);
+        }
       }
-
-      if (card.apiID) {
-        const cardID = await cardRepository.insertCard(card);
-        card.cardID = cardID;
-        addCardToInventory(card);
-      }
-    }, 500);
+    }, 1000);
   } catch (error) {
     console.error(error);
   }
@@ -207,27 +207,32 @@ const addCardToInventory = (card: Card) => {
   }
 };
 
-const getCardDataFromApi = async (cardNumber: string): Promise<ApiResponse> => {
+const getCardDataFromApi = async (
+  cardNumber: string
+): Promise<ApiResponse | undefined> => {
   if (!cardNumber || cardNumber.includes('LART')) {
     return { apiID: 0, price: 0 };
   }
 
-  setTimeout(async function () {
-    const yugiohURL = process.env.YUGIOH_API;
-    const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
-    const response = await axios.get(APIUrl);
+  try {
+    setTimeout(async function () {
+      const yugiohURL = process.env.YUGIOH_API;
+      const APIUrl = `${yugiohURL}/cardsetsinfo.php?setcode=${cardNumber}`;
+      const response = await axios.get(APIUrl);
 
-    const data: any = response.data;
+      const data: any = response.data;
 
-    const returnData: ApiResponse = {
-      apiID: data.id,
-      price: data.set_price,
-    };
+      const returnData: ApiResponse = {
+        apiID: data.id,
+        price: data.set_price,
+      };
 
-    return returnData;
-  });
-
-  return { apiID: 0, price: 0 };
+      return returnData;
+    });
+  } catch (error) {
+    console.error(error);
+    return { apiID: 0, price: 0 };
+  }
 };
 
 const getCardsFromAPI = async (
@@ -317,22 +322,27 @@ const getCardFromAPI = async (
 };
 
 const getAPIID = async (setName: string, cardName: string): Promise<number> => {
-  const response: any = await axios.get(
-    `https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=${setName}`
-  );
+  try {
+    const response: any = await axios.get(
+      `https://db.ygoprodeck.com/api/v7/cardinfo.php?cardset=${setName}`
+    );
 
-  const responseData = response.data.data;
+    const responseData = response.data.data;
 
-  let apiID = 0;
+    let apiID = 0;
 
-  for (const data of responseData) {
-    if (data.name === cardName) {
-      apiID = data.id;
-      break;
+    for (const data of responseData) {
+      if (data.name === cardName) {
+        apiID = data.id;
+        break;
+      }
     }
-  }
 
-  return apiID;
+    return apiID;
+  } catch (error) {
+    console.error(error);
+    return 0;
+  }
 };
 
 export {

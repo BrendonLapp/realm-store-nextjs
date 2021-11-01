@@ -1,4 +1,4 @@
 export interface GalleryImages {
-  image: string;
-  caption: string;
+  imageLink: string;
+  altName: string;
 }

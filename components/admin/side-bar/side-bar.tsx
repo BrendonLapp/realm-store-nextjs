@@ -5,7 +5,6 @@ import Link from 'next/link';
 import CardInventory from '../card-inventory';
 
 const SideBar = ({ setPanel }: any) => {
-  console.log('sidebar');
   return (
     <>
       <div className="bg-dark panel-slider">

@@ -75,3 +75,11 @@ CREATE TABLE CardInventory (
     FOREIGN KEY (CardID) REFERENCES Card(CardID),
     FOREIGN KEY (QualityID) REFERENCES Quality(QualityID)
 );
+
+CREATE TABLE Gallery (
+	imageID INT NOT NULL,
+    imageLink VARCHAR(500) NULL,
+    altName VARCHAR(100) NULL,
+    
+    PRIMARY KEY (imageID)
+)
