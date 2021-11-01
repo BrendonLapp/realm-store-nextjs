@@ -75,11 +75,24 @@ class CardRepository {
     const connection = connectToDB();
 
     if (connection) {
-      const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
-        rarity, price, sum(quantity) AS quantity, image
-        FROM Card 
-        INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
-        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID `;
+      const sqlQuery = `
+      SELECT 
+          Card.cardID, 
+          apiID, 
+          cardName, 
+          setName, 
+          cardNumber,
+          cardInventory.printing, 
+          cardInventory.specialPrinting, 
+          rarity, 
+          price, 
+          image,
+            (SELECT sum(Quantity) 
+              FROM CardInventory 
+              WHERE Card.CardID = CardInventory.CardID) 
+          AS quantity
+          FROM Card 
+          INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID;`;
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {
@@ -173,13 +186,26 @@ class CardRepository {
 
     if (connection) {
       //TODO: need to figure out how to get the quantity in to this query
-      const sqlQuery = `SELECT Card.cardID, apiID, cardName, setName, cardNumber, cardInventory.printing, cardInventory.specialPrinting, 
-        rarity, price, image
-        FROM Card 
-        INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
-        INNER JOIN Quality ON CardInventory.QualityID = Quality.qualityID
-        ORDER BY RAND() 
-        LIMIT 8`;
+      const sqlQuery = `
+        SELECT 
+            Card.cardID, 
+            apiID, 
+            cardName, 
+            setName, 
+            cardNumber,
+            cardInventory.printing, 
+            cardInventory.specialPrinting, 
+            rarity, 
+            price, 
+            image,
+              (SELECT sum(Quantity) 
+                FROM CardInventory 
+                WHERE Card.CardID = CardInventory.CardID) 
+            AS quantity
+            FROM Card 
+            INNER JOIN CardInventory ON Card.CardID = CardInventory.CardID 
+            ORDER BY RAND() 
+            LIMIT 8;`;
 
       return new Promise((resolve, reject) => {
         connection.query(sqlQuery, function (error: any, result: any) {

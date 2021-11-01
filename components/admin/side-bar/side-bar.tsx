@@ -18,7 +18,7 @@ const SideBar = ({ setPanel }: any) => {
           className="flex-shrink-0 p-3 bg-dark sidebar"
           style={{ width: '280px' }}
         >
-          <Link href="/Admin">
+          <Link href="/admin">
             <div className="d-flex align-items-center text-decoration-none link-light no-background btn btn-toggle">
               Home
             </div>

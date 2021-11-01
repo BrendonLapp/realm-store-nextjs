@@ -14,8 +14,8 @@ interface HomeProps {
 const Home = ({ cards, galleryImages }: HomeProps) => {
   return (
     <>
-      <section className="jumbotron text-center">
-        <div className="container">
+      <section className="jumbotron text-center bg-dark">
+        <div className="container carousel-container">
           <Carousel images={galleryImages} />
         </div>
       </section>
