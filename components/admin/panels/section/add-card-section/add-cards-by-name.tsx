@@ -5,6 +5,7 @@ import SubmitButton from '../../../../shared/submit-button';
 import { APICard } from '../../../../../types/card';
 import AddCardInventoryPanel from './add-card-inventory-panel';
 import AddCardsPanel from './add-cards-panel';
+import ReactPaginate from 'react-paginate';
 
 const AddCardsByName = ({}) => {
   const [searchParameter, setSearchParameter] = useState('');
@@ -52,6 +53,16 @@ const AddCardsByName = ({}) => {
         {cardName && <AddCardInventoryPanel cardName={cardName} />}
 
         {cards && <AddCardsPanel cards={cards} viewProduct={viewProduct} />}
+
+        <ReactPaginate
+          breakLabel="..."
+          nextLabel="next >"
+          onPageChange={handlePageClick}
+          pageRangeDisplayed={5}
+          pageCount={pageCount}
+          previousLabel="< previous"
+          renderOnZeroPageCount={undefined}
+        />
       </div>
     </>
   );
